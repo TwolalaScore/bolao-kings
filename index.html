@@ -1,0 +1,3268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bolão Kings de Verdade</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.4/babel.min.js"></script>
+<style>
+  html, body { margin:0; padding:0; background:#022c22; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/plain" id="app-source">
+const { useState, useEffect, useCallback, useMemo } = React;
+
+function Icon({ children, size = 24, className = "" }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      {children}
+    </svg>
+  );
+}
+function Trophy(props) {
+  return (
+    <Icon {...props}>
+      <path d="M8 21h8" />
+      <path d="M12 17v4" />
+      <path d="M7 4h10v4a5 5 0 0 1-10 0V4z" />
+      <path d="M5 4H3v2a4 4 0 0 0 4 4" />
+      <path d="M19 4h2v2a4 4 0 0 1-4 4" />
+    </Icon>
+  );
+}
+function Medal(props) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="14" r="5" />
+      <path d="M9 10.5 6 3H4l3.5 8.2" />
+      <path d="M15 10.5 18 3h2l-3.5 8.2" />
+    </Icon>
+  );
+}
+function Award(props) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="8" r="6" />
+      <path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5" />
+    </Icon>
+  );
+}
+function LogIn(props) {
+  return (
+    <Icon {...props}>
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+      <polyline points="10 17 15 12 10 7" />
+      <line x1="15" y1="12" x2="3" y2="12" />
+    </Icon>
+  );
+}
+function LogOut(props) {
+  return (
+    <Icon {...props}>
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <polyline points="16 17 21 12 16 7" />
+      <line x1="21" y1="12" x2="9" y2="12" />
+    </Icon>
+  );
+}
+function UserPlus(props) {
+  return (
+    <Icon {...props}>
+      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="8.5" cy="7" r="4" />
+      <line x1="19" y1="8" x2="19" y2="14" />
+      <line x1="22" y1="11" x2="16" y2="11" />
+    </Icon>
+  );
+}
+function Shield(props) {
+  return (
+    <Icon {...props}>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </Icon>
+  );
+}
+function ShieldCheck(props) {
+  return (
+    <Icon {...props}>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <polyline points="9 12 11 14 15 10" />
+    </Icon>
+  );
+}
+function Calendar(props) {
+  return (
+    <Icon {...props}>
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+    </Icon>
+  );
+}
+function CheckCircle2(props) {
+  return (
+    <Icon {...props}>
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+      <polyline points="22 4 12 14.01 9 11.01" />
+    </Icon>
+  );
+}
+function Lock(props) {
+  return (
+    <Icon {...props}>
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </Icon>
+  );
+}
+function Eye(props) {
+  return (
+    <Icon {...props}>
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx="12" cy="12" r="3" />
+    </Icon>
+  );
+}
+function Plus(props) {
+  return (
+    <Icon {...props}>
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </Icon>
+  );
+}
+function Clock(props) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </Icon>
+  );
+}
+function UsersIcon(props) {
+  return (
+    <Icon {...props}>
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </Icon>
+  );
+}
+function RefreshCw(props) {
+  return (
+    <Icon {...props}>
+      <polyline points="23 4 23 10 17 10" />
+      <polyline points="1 20 1 14 7 14" />
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+    </Icon>
+  );
+}
+function ChevronDown(props) {
+  return (
+    <Icon {...props}>
+      <polyline points="6 9 12 15 18 9" />
+    </Icon>
+  );
+}
+function X(props) {
+  return (
+    <Icon {...props}>
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </Icon>
+  );
+}
+function Camera(props) {
+  return (
+    <Icon {...props}>
+      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+      <circle cx="12" cy="13" r="4" />
+    </Icon>
+  );
+}
+function User(props) {
+  return (
+    <Icon {...props}>
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </Icon>
+  );
+}
+function Trash2(props) {
+  return (
+    <Icon {...props}>
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+      <line x1="10" y1="11" x2="10" y2="17" />
+      <line x1="14" y1="11" x2="14" y2="17" />
+    </Icon>
+  );
+}
+function Pencil(props) {
+  return (
+    <Icon {...props}>
+      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+    </Icon>
+  );
+}
+function BarChart3(props) {
+  return (
+    <Icon {...props}>
+      <line x1="18" y1="20" x2="18" y2="10" />
+      <line x1="12" y1="20" x2="12" y2="4" />
+      <line x1="6" y1="20" x2="6" y2="14" />
+    </Icon>
+  );
+}
+function ArrowLeft(props) {
+  return (
+    <Icon {...props}>
+      <line x1="19" y1="12" x2="5" y2="12" />
+      <polyline points="12 19 5 12 12 5" />
+    </Icon>
+  );
+}
+
+
+const LOGO_DATA_URL = "data:image/jpeg;base64,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";
+
+function resizeImageToDataUrl(file, maxSize = 160, format = "jpeg") {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width;
+        let h = img.height;
+        if (w > h) {
+          if (w > maxSize) {
+            h = Math.round(h * (maxSize / w));
+            w = maxSize;
+          }
+        } else {
+          if (h > maxSize) {
+            w = Math.round(w * (maxSize / h));
+            h = maxSize;
+          }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, w, h);
+        if (format === "png") {
+          resolve(canvas.toDataURL("image/png"));
+        } else {
+          resolve(canvas.toDataURL("image/jpeg", 0.82));
+        }
+      };
+      img.onerror = () => reject(new Error("Não foi possível ler essa imagem."));
+      img.src = e.target.result;
+    };
+    reader.onerror = () => reject(new Error("Não foi possível ler esse arquivo."));
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ---------------------------------------------------------
+   FIREBASE / FIRESTORE — banco de dados real, persistente e
+   compartilhado entre todos os jogadores, independente do
+   armazenamento interno de artifacts do Claude.
+--------------------------------------------------------- */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAPidzGsq2-qzqCsV2PSXdW46aPXJz8tq8",
+  authDomain: "bolao-kings.firebaseapp.com",
+  projectId: "bolao-kings",
+  storageBucket: "bolao-kings.firebasestorage.app",
+  messagingSenderId: "519712009200",
+  appId: "1:519712009200:web:41b7e9edd6db551c8acb35",
+};
+
+const FIRESTORE_COLLECTION = "bolao_kv";
+
+function loadScriptOnce(src, timeoutMs = 6000) {
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        reject(new Error("Tempo esgotado carregando script: " + src));
+      }
+    }, timeoutMs);
+    const finish = (fn) => (...args) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      fn(...args);
+    };
+    const existing = document.querySelector(`script[src="${src}"]`);
+    if (existing) {
+      if (existing.dataset.loaded === "true") return finish(resolve)();
+      existing.addEventListener("load", finish(resolve));
+      existing.addEventListener("error", finish(() => reject(new Error("Falha ao carregar " + src))));
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = src;
+    script.async = true;
+    script.onload = finish(() => {
+      script.dataset.loaded = "true";
+      resolve();
+    });
+    script.onerror = finish(() => reject(new Error("Falha ao carregar " + src)));
+    document.head.appendChild(script);
+  });
+}
+
+let firestoreDbPromise = null;
+
+function getFirestoreDb() {
+  if (firestoreDbPromise) return firestoreDbPromise;
+  firestoreDbPromise = (async () => {
+    await loadScriptOnce("https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-app-compat.js");
+    await loadScriptOnce("https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-firestore-compat.js");
+    if (!window.firebase.apps || !window.firebase.apps.length) {
+      window.firebase.initializeApp(FIREBASE_CONFIG);
+    }
+    return window.firebase.firestore();
+  })();
+  return firestoreDbPromise;
+}
+
+let globalDbgSink = null;
+function reportError(msg) {
+  console.error(msg);
+  if (globalDbgSink) globalDbgSink("⚠️ " + msg);
+}
+
+function withTimeout(promise, ms, label) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error(`Tempo esgotado (${ms}ms): ${label}`)), ms)),
+  ]);
+}
+
+// Confere direto no Firestore se um documento realmente existe — usado para
+// avisar o usuário quando alguma ação não conseguiu ser salva de verdade.
+async function verifyPersisted(key) {
+  try {
+    const db = await withTimeout(getFirestoreDb(), 8000, "conectar ao Firestore");
+    const doc = await withTimeout(db.collection(FIRESTORE_COLLECTION).doc(key).get(), 8000, "verifyPersisted:" + key);
+    return doc.exists;
+  } catch (e) {
+    reportError("verifyPersisted(" + key + "): " + e.message);
+    return false;
+  }
+}
+
+async function getJSON(key) {
+  try {
+    const db = await withTimeout(getFirestoreDb(), 8000, "conectar ao Firestore");
+    const doc = await withTimeout(db.collection(FIRESTORE_COLLECTION).doc(key).get(), 8000, "getJSON:" + key);
+    if (!doc.exists) return null;
+    const data = doc.data();
+    return data && data.value !== undefined ? JSON.parse(data.value) : null;
+  } catch (e) {
+    reportError("getJSON(" + key + "): " + e.message);
+    return null;
+  }
+}
+
+async function setJSON(key, value) {
+  try {
+    const db = await withTimeout(getFirestoreDb(), 8000, "conectar ao Firestore");
+    await withTimeout(
+      db.collection(FIRESTORE_COLLECTION).doc(key).set({ value: JSON.stringify(value) }),
+      8000,
+      "setJSON:" + key
+    );
+    return true;
+  } catch (e) {
+    reportError("setJSON(" + key + "): " + e.message);
+    return false;
+  }
+}
+
+async function deleteJSON(key) {
+  try {
+    const db = await withTimeout(getFirestoreDb(), 8000, "conectar ao Firestore");
+    await withTimeout(db.collection(FIRESTORE_COLLECTION).doc(key).delete(), 8000, "deleteJSON:" + key);
+    return true;
+  } catch (e) {
+    reportError("deleteJSON(" + key + "): " + e.message);
+    return false;
+  }
+}
+
+// Adiciona um item a uma lista-índice (users_index, rounds_index, competitions_index...)
+// de forma ATÔMICA via transação do Firestore — evita que duas pessoas cadastrando ao
+// mesmo tempo se "sobrescrevam" e percam registro uma da outra.
+async function appendToIndexAtomic(indexKey, value) {
+  try {
+    const db = await withTimeout(getFirestoreDb(), 8000, "conectar ao Firestore");
+    const docRef = db.collection(FIRESTORE_COLLECTION).doc(indexKey);
+    await withTimeout(
+      db.runTransaction(async (transaction) => {
+        const doc = await transaction.get(docRef);
+        let arr = [];
+        if (doc.exists) {
+          const data = doc.data();
+          arr = data && data.value !== undefined ? JSON.parse(data.value) : [];
+        }
+        if (!arr.includes(value)) arr.push(value);
+        transaction.set(docRef, { value: JSON.stringify(arr) });
+      }),
+      8000,
+      "appendToIndexAtomic:" + indexKey
+    );
+    return true;
+  } catch (e) {
+    reportError("appendToIndexAtomic(" + indexKey + "): " + e.message);
+    return false;
+  }
+}
+
+// Remove um item de uma lista-índice, também de forma atômica.
+async function removeFromIndexAtomic(indexKey, value) {
+  try {
+    const db = await withTimeout(getFirestoreDb(), 8000, "conectar ao Firestore");
+    const docRef = db.collection(FIRESTORE_COLLECTION).doc(indexKey);
+    await withTimeout(
+      db.runTransaction(async (transaction) => {
+        const doc = await transaction.get(docRef);
+        let arr = [];
+        if (doc.exists) {
+          const data = doc.data();
+          arr = data && data.value !== undefined ? JSON.parse(data.value) : [];
+        }
+        arr = arr.filter((x) => x !== value);
+        transaction.set(docRef, { value: JSON.stringify(arr) });
+      }),
+      8000,
+      "removeFromIndexAtomic:" + indexKey
+    );
+    return true;
+  } catch (e) {
+    reportError("removeFromIndexAtomic(" + indexKey + "): " + e.message);
+    return false;
+  }
+}
+
+async function listKeys(prefix) {
+  try {
+    const db = await withTimeout(getFirestoreDb(), 8000, "conectar ao Firestore");
+    const FieldPath = window.firebase.firestore.FieldPath;
+    const snapshot = await withTimeout(
+      db
+        .collection(FIRESTORE_COLLECTION)
+        .where(FieldPath.documentId(), ">=", prefix)
+        .where(FieldPath.documentId(), "<", prefix + "\uf8ff")
+        .get(),
+      8000,
+      "listKeys:" + prefix
+    );
+    return snapshot.docs.map((d) => d.id);
+  } catch (e) {
+    reportError("listKeys(" + prefix + "): " + e.message);
+    return [];
+  }
+}
+
+
+async function loadAllData() {
+  const competitionKeys = await listKeys("competition:");
+  const competitions = [];
+  for (const key of competitionKeys) {
+    const c = await getJSON(key);
+    if (c) competitions.push(c);
+  }
+  competitions.sort((a, b) => a.createdAt - b.createdAt);
+
+  const roundKeys = await listKeys("round:");
+  const rounds = [];
+  for (const key of roundKeys) {
+    const r = await getJSON(key);
+    if (r) rounds.push(r);
+  }
+  rounds.sort((a, b) => a.createdAt - b.createdAt);
+
+  const userKeys = await listKeys("user:");
+  const users = [];
+  for (const key of userKeys) {
+    const u = await getJSON(key);
+    if (u) users.push(u);
+  }
+
+  let picksMap = {};
+  try {
+    const keys = await listKeys("pick:");
+    for (const k of keys) {
+      const v = await getJSON(k);
+      if (v) picksMap[k] = v;
+    }
+  } catch (e) {
+    /* no picks yet */
+  }
+
+  return { competitions, rounds, users, picksMap };
+}
+
+function getCompetition(competitions, competitionId) {
+  return competitions.find((c) => c.id === competitionId) || null;
+}
+function getTeam(competition, teamId) {
+  if (!competition) return null;
+  return competition.teams.find((t) => t.id === teamId) || null;
+}
+function teamLabel(competition, teamId) {
+  const t = getTeam(competition, teamId);
+  return t ? t.name : "?";
+}
+
+async function ensureAdminSeeded() {
+  const existing = await getJSON("user:admin");
+  if (!existing) {
+    await setJSON("user:admin", { username: "admin", password: "admin123", displayName: "Administrador", isAdmin: true });
+  }
+}
+
+/* ---------------------------------------------------------
+   SCORING HELPERS
+--------------------------------------------------------- */
+function pickKey(gameId, username) {
+  return `pick:${gameId}::${username}`;
+}
+
+function gameStarted(game) {
+  return Date.now() >= new Date(game.startTime).getTime();
+}
+
+// Os palpites de TODA a rodada travam assim que o primeiro jogo dela (pelo horário) começa.
+function roundLocked(round) {
+  if (!round || !round.games || round.games.length === 0) return false;
+  const firstGame = [...round.games].sort((a, b) => new Date(a.startTime) - new Date(b.startTime))[0];
+  return gameStarted(firstGame);
+}
+
+const FORMAT_MATCHBALL = "Matchball";
+const FORMAT_SHOOTOUT = "Shootout";
+
+// returns { points, status } where status: 'pending' | 'wo' | 'wrong' | 'correct'
+// `locked` indica se a rodada desse jogo já travou (primeiro jogo da rodada já começou)
+function computeGameOutcome(game, pick, locked) {
+  if (!pick) {
+    return locked ? { points: 0, status: "wo" } : { points: 0, status: "not_started" };
+  }
+  if (game.status !== "finished") {
+    return { points: 0, status: "pending" };
+  }
+  const correct = pick.winner === game.resultWinner;
+  let points = 0;
+  if (correct) points += 3;
+  if (correct && game.resultFormat === FORMAT_SHOOTOUT && pick.format === FORMAT_SHOOTOUT) points += 3;
+  if (correct && game.resultFormat === FORMAT_MATCHBALL && pick.format === FORMAT_MATCHBALL) points += 2;
+  return { points, status: correct ? "correct" : "wrong" };
+}
+
+function isRoundFinished(round) {
+  return round.games.length > 0 && round.games.every((g) => g.status === "finished");
+}
+
+function computeUserRoundPoints(round, username, picksMap) {
+  let total = 0;
+  const locked = roundLocked(round);
+  for (const g of round.games) {
+    const pick = picksMap[pickKey(g.id, username)];
+    total += computeGameOutcome(g, pick, locked).points;
+  }
+  return total;
+}
+
+function computeRoundMedals(round, users, picksMap) {
+  const result = {};
+  if (!isRoundFinished(round)) return result;
+  const scores = users.map((u) => ({ username: u.username, score: computeUserRoundPoints(round, u.username, picksMap) }));
+  // as 3 maiores PONTUAÇÕES distintas levam medalha — todo mundo empatado numa
+  // mesma pontuação recebe a mesma medalha (não é limitado a 3 pessoas)
+  const distinctScoresDesc = Array.from(new Set(scores.map((s) => s.score))).sort((a, b) => b - a);
+  const medalForScore = {};
+  if (distinctScoresDesc[0] !== undefined) medalForScore[distinctScoresDesc[0]] = "gold";
+  if (distinctScoresDesc[1] !== undefined) medalForScore[distinctScoresDesc[1]] = "silver";
+  if (distinctScoresDesc[2] !== undefined) medalForScore[distinctScoresDesc[2]] = "bronze";
+  for (const s of scores) {
+    const medal = medalForScore[s.score];
+    if (medal) result[s.username] = medal;
+  }
+  return result;
+}
+
+function computeRanking(rounds, users, picksMap) {
+  return users
+    .map((u) => {
+      let totalPoints = 0;
+      let medals = { gold: 0, silver: 0, bronze: 0 };
+      for (const round of rounds) {
+        totalPoints += computeUserRoundPoints(round, u.username, picksMap);
+        const roundMedals = computeRoundMedals(round, users, picksMap);
+        const m = roundMedals[u.username];
+        if (m) medals[m] += 1;
+      }
+      return { username: u.username, displayName: u.displayName, avatar: u.avatar || null, totalPoints, medals };
+    })
+    .sort((a, b) => {
+      if (b.totalPoints !== a.totalPoints) return b.totalPoints - a.totalPoints;
+      if (b.medals.gold !== a.medals.gold) return b.medals.gold - a.medals.gold;
+      if (b.medals.silver !== a.medals.silver) return b.medals.silver - a.medals.silver;
+      if (b.medals.bronze !== a.medals.bronze) return b.medals.bronze - a.medals.bronze;
+      return a.displayName.localeCompare(b.displayName);
+    });
+}
+
+// Estatísticas de um jogador considerando TODAS as competições/rodadas já cadastradas.
+function computeUserStats(username, competitions, allRounds, picksMap) {
+  const forCounts = {}; // time escolhido como vencedor -> {name, logo, count}
+  const againstCounts = {}; // time preterido (escolheu o adversário dele) -> {name, logo, count}
+  const teamPoints = {}; // time escolhido como vencedor -> {name, logo, points}
+  let totalDecided = 0; // palpites em jogos já finalizados
+  let correct = 0;
+
+  for (const round of allRounds) {
+    const competition = competitions.find((c) => c.id === round.competitionId);
+    for (const game of round.games) {
+      const pick = picksMap[pickKey(game.id, username)];
+      if (!pick) continue;
+
+      const winnerTeamId = pick.winner === "team1" ? game.team1Id : game.team2Id;
+      const loserTeamId = pick.winner === "team1" ? game.team2Id : game.team1Id;
+      const winnerTeam = getTeam(competition, winnerTeamId);
+      const loserTeam = getTeam(competition, loserTeamId);
+
+      if (winnerTeam) {
+        if (!forCounts[winnerTeam.name]) forCounts[winnerTeam.name] = { name: winnerTeam.name, logo: winnerTeam.logo || null, count: 0 };
+        forCounts[winnerTeam.name].count += 1;
+        if (!forCounts[winnerTeam.name].logo && winnerTeam.logo) forCounts[winnerTeam.name].logo = winnerTeam.logo;
+      }
+      if (loserTeam) {
+        if (!againstCounts[loserTeam.name]) againstCounts[loserTeam.name] = { name: loserTeam.name, logo: loserTeam.logo || null, count: 0 };
+        againstCounts[loserTeam.name].count += 1;
+        if (!againstCounts[loserTeam.name].logo && loserTeam.logo) againstCounts[loserTeam.name].logo = loserTeam.logo;
+      }
+
+      if (game.status === "finished") {
+        totalDecided += 1;
+        if (pick.winner === game.resultWinner) correct += 1;
+
+        if (winnerTeam) {
+          const outcome = computeGameOutcome(game, pick, true);
+          if (!teamPoints[winnerTeam.name]) teamPoints[winnerTeam.name] = { name: winnerTeam.name, logo: winnerTeam.logo || null, points: 0 };
+          teamPoints[winnerTeam.name].points += outcome.points;
+          if (!teamPoints[winnerTeam.name].logo && winnerTeam.logo) teamPoints[winnerTeam.name].logo = winnerTeam.logo;
+        }
+      }
+    }
+  }
+
+  const mostPicked = Object.values(forCounts)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+  // "menos palpitou a favor" agora mostra os times contra os quais o jogador mais
+  // escolheu o adversário — ou seja, os times que ele mais preteriu
+  const mostPickedAgainst = Object.values(againstCounts)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+
+  const teamsWithPoints = Object.values(teamPoints);
+  const mostPointsTeams = [...teamsWithPoints].sort((a, b) => b.points - a.points).slice(0, 5);
+  const leastPointsTeams = [...teamsWithPoints].sort((a, b) => a.points - b.points).slice(0, 5);
+
+  return {
+    totalDecided,
+    correct,
+    winRate: totalDecided > 0 ? (correct / totalDecided) * 100 : null,
+    mostPicked,
+    leastPicked: mostPickedAgainst,
+    mostPointsTeams,
+    leastPointsTeams,
+  };
+}
+
+// Compara os palpites de um jogador com os de todos os outros, contando quantos
+// palpites idênticos (mesmo vencedor E mesmo formato) eles tiveram em confrontos
+// que os dois palpitaram, em toda a história de todas as competições.
+function computeSimilarUsers(username, users, allRounds, picksMap) {
+  const others = users.filter((u) => u.username !== username);
+  const results = others.map((other) => {
+    let sameCount = 0;
+    let comparedCount = 0;
+    for (const round of allRounds) {
+      for (const game of round.games) {
+        const myPick = picksMap[pickKey(game.id, username)];
+        const otherPick = picksMap[pickKey(game.id, other.username)];
+        if (!myPick || !otherPick) continue;
+        comparedCount += 1;
+        if (myPick.winner === otherPick.winner && myPick.format === otherPick.format) {
+          sameCount += 1;
+        }
+      }
+    }
+    return {
+      username: other.username,
+      displayName: other.displayName,
+      avatar: other.avatar || null,
+      sameCount,
+      comparedCount,
+    };
+  });
+  return results
+    .filter((r) => r.comparedCount > 0)
+    .sort((a, b) => b.sameCount - a.sameCount || b.comparedCount - a.comparedCount);
+}
+
+// Converte um valor de <input type="datetime-local"> (ex: "2026-07-24T15:30"),
+// tratando-o explicitamente como horário de Brasília (UTC-3, sem horário de verão desde 2019),
+// em um instante UTC real — independente do fuso do navegador de quem estiver cadastrando.
+function brasiliaLocalToISO(localDateTimeStr) {
+  if (!localDateTimeStr) return null;
+  return new Date(`${localDateTimeStr}:00-03:00`).toISOString();
+}
+
+// Converte um instante UTC (ISO) de volta para o formato aceito por
+// <input type="datetime-local">, exibindo no horário de Brasília.
+function isoToBrasiliaLocalInput(iso) {
+  if (!iso) return "";
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(new Date(iso));
+  const get = (type) => parts.find((p) => p.type === type)?.value;
+  return `${get("year")}-${get("month")}-${get("day")}T${get("hour")}:${get("minute")}`;
+}
+
+function fmtDate(iso) {
+  try {
+    const d = new Date(iso);
+    const formatted = d.toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "America/Sao_Paulo",
+    });
+    return `${formatted} (Brasília)`;
+  } catch (e) {
+    return iso;
+  }
+}
+
+function TeamBadge({ team, size = 24 }) {
+  if (team?.logo) {
+    return (
+      <img
+        src={team.logo}
+        alt={team.name}
+        style={{ width: size, height: size }}
+        className="object-contain shrink-0"
+      />
+    );
+  }
+  return (
+    <div
+      style={{ width: size, height: size }}
+      className="rounded-full bg-emerald-900/60 flex items-center justify-center shrink-0"
+    >
+      <Shield size={Math.round(size * 0.55)} className="text-stone-500" />
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------
+   MAIN APP
+--------------------------------------------------------- */
+function App() {
+  const [loading, setLoading] = useState(true);
+  const [storageOk, setStorageOk] = useState(true);
+  const [data, setData] = useState({ competitions: [], rounds: [], users: [], picksMap: {} });
+  const [session, setSession] = useState(null); // {username, displayName, isAdmin}
+  const [tab, setTab] = useState("palpitar");
+  const [toast, setToast] = useState(null);
+  const [authMode, setAuthMode] = useState("login");
+  const [authForm, setAuthForm] = useState({ username: "", password: "", displayName: "" });
+
+  const [selectedCompetitionId, setSelectedCompetitionId] = useState(null); // usado em Palpitar/Ver/Admin
+  const [selectedRoundId, setSelectedRoundId] = useState(null);
+  const [pickDrafts, setPickDrafts] = useState({}); // gameId -> {winner, format}
+
+  const [adminSubTab, setAdminSubTab] = useState("competicoes"); // competicoes | jogos | resultados
+  const [adminCompName, setAdminCompName] = useState("");
+  const [adminCompSelectedId, setAdminCompSelectedId] = useState(null);
+  const [adminTeamForm, setAdminTeamForm] = useState({ name: "", logo: null });
+  const [teamLogoUploading, setTeamLogoUploading] = useState(false);
+  const [adminRoundName, setAdminRoundName] = useState("");
+  const [draftGames, setDraftGames] = useState([]); // [{team1Id, team2Id, startTime}]
+  const [adminSelectedRoundId, setAdminSelectedRoundId] = useState(null);
+  const [adminResultForm, setAdminResultForm] = useState({}); // gameId -> {winner, format}
+  const [removeUserConfirm, setRemoveUserConfirm] = useState(null); // username pendente de confirmação
+  const [revealedPasswords, setRevealedPasswords] = useState(new Set());
+  const [adminEditingUserUsername, setAdminEditingUserUsername] = useState(null);
+  const [adminEditUserForm, setAdminEditUserForm] = useState({ displayName: "", avatar: null });
+  const [adminUserAvatarUploading, setAdminUserAvatarUploading] = useState(false);
+  const [editingGameId, setEditingGameId] = useState(null);
+  const [editingTeamId, setEditingTeamId] = useState(null);
+  const [statsSelectedUsername, setStatsSelectedUsername] = useState(null);
+  const [editTeamForm, setEditTeamForm] = useState({ name: "", logo: null });
+  const [editGameForm, setEditGameForm] = useState({ team1Id: "", team2Id: "", startTime: "" });
+  const [editingResultGameId, setEditingResultGameId] = useState(null);
+  const [adminEditingPick, setAdminEditingPick] = useState(null); // {gameId, username}
+  const [adminPickForm, setAdminPickForm] = useState({ winner: "", format: "" });
+  const [deleteCompConfirm, setDeleteCompConfirm] = useState(false);
+  const [deletingComp, setDeletingComp] = useState(false);
+  const [removingUser, setRemovingUser] = useState(null); // username sendo removido agora
+
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [profileForm, setProfileForm] = useState({ displayName: "", avatar: null, newPassword: "", confirmPassword: "" });
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [profileSaving, setProfileSaving] = useState(false);
+
+  const refresh = useCallback(async () => {
+    const d = await loadAllData();
+    setData(d);
+    if (!selectedCompetitionId && d.competitions.length > 0) {
+      setSelectedCompetitionId(d.competitions[d.competitions.length - 1].id);
+    }
+    if (!adminCompSelectedId && d.competitions.length > 0) {
+      setAdminCompSelectedId(d.competitions[d.competitions.length - 1].id);
+    }
+    return d;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCompetitionId, adminCompSelectedId]);
+
+  const [checkingStorage, setCheckingStorage] = useState(false);
+
+  const runStorageHealthcheck = useCallback(async () => {
+    setCheckingStorage(true);
+    let ok = false;
+    for (let attempt = 0; attempt < 3 && !ok; attempt++) {
+      try {
+        const testWrite = await setJSON("healthcheck_ping", { ts: Date.now() });
+        if (testWrite) ok = true;
+      } catch (e) {
+        console.error("Firestore healthcheck failed (attempt " + attempt + "):", e);
+      }
+      if (!ok && attempt < 2) await new Promise((res) => setTimeout(res, 1000));
+    }
+    setStorageOk(ok);
+    setCheckingStorage(false);
+    return ok;
+  }, []);
+
+  async function retryStorageNow() {
+    const ok = await runStorageHealthcheck();
+    if (ok) {
+      showToast("Armazenamento persistente conectado! Seus dados agora ficam salvos de verdade.", "success");
+      await refresh();
+    } else {
+      showToast("Ainda sem conexão com o armazenamento. Tente de novo em instantes.", "error");
+    }
+  }
+
+  useEffect(() => {
+    let finished = false;
+    const safetyTimer = setTimeout(() => {
+      if (!finished) {
+        console.error("Inicialização demorou demais, liberando a tela mesmo assim.");
+        setStorageOk(false);
+        setLoading(false);
+      }
+    }, 10000);
+
+    (async () => {
+      try {
+        await runStorageHealthcheck();
+        await ensureAdminSeeded();
+        const d = await refresh();
+
+        // tenta restaurar a sessão salva no navegador, se existir e o usuário ainda existir
+        const savedUsername = localStorage.getItem("bolao_session_username");
+        if (savedUsername) {
+          const savedUser = d.users.find((u) => u.username === savedUsername);
+          if (savedUser) {
+            setSession({ username: savedUser.username, displayName: savedUser.displayName, isAdmin: !!savedUser.isAdmin });
+          } else {
+            localStorage.removeItem("bolao_session_username");
+          }
+        }
+      } catch (e) {
+        console.error("Erro na inicialização:", e);
+      } finally {
+        finished = true;
+        clearTimeout(safetyTimer);
+        setLoading(false);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // atualiza os dados automaticamente a cada 15s (classificação, resultados, etc
+  // aparecem para todo mundo sem precisar recarregar a página manualmente)
+  useEffect(() => {
+    if (!session) return;
+    const interval = setInterval(() => {
+      refresh();
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [session, refresh]);
+
+  // mantém a rodada selecionada coerente com a competição escolhida (Palpitar/Ver Palpites)
+  useEffect(() => {
+    if (!selectedCompetitionId) return;
+    const roundsOfComp = data.rounds.filter((r) => r.competitionId === selectedCompetitionId);
+    if (roundsOfComp.length === 0) {
+      setSelectedRoundId(null);
+      return;
+    }
+    if (!roundsOfComp.some((r) => r.id === selectedRoundId)) {
+      setSelectedRoundId(roundsOfComp[roundsOfComp.length - 1].id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCompetitionId, data.rounds]);
+
+  // mantém a rodada selecionada do admin coerente com a competição escolhida no admin
+  useEffect(() => {
+    if (!adminCompSelectedId) return;
+    const roundsOfComp = data.rounds.filter((r) => r.competitionId === adminCompSelectedId);
+    if (roundsOfComp.length === 0) {
+      setAdminSelectedRoundId(null);
+      return;
+    }
+    if (!roundsOfComp.some((r) => r.id === adminSelectedRoundId)) {
+      setAdminSelectedRoundId(roundsOfComp[roundsOfComp.length - 1].id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [adminCompSelectedId, data.rounds]);
+
+  function showToast(msg, kind = "info") {
+    setToast({ msg, kind });
+    setTimeout(() => setToast(null), kind === "error" ? 6500 : 3200);
+  }
+
+  /* ---------------- AUTH ---------------- */
+  const [authSubmitting, setAuthSubmitting] = useState(false);
+  const [debugLog, setDebugLog] = useState([]);
+  function dbg(msg, extra) {
+    console.warn(msg, extra !== undefined ? extra : "");
+    const line = extra !== undefined ? `${msg} ${typeof extra === "object" ? JSON.stringify(extra) : extra}` : msg;
+    setDebugLog((prev) => [...prev.slice(-11), `${new Date().toLocaleTimeString()} ${line}`]);
+  }
+  useEffect(() => {
+    globalDbgSink = dbg;
+    return () => {
+      globalDbgSink = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function handleAuthSubmit(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    dbg("[bolao] submit fired, mode:", authMode);
+    if (authSubmitting) {
+      dbg("[bolao] blocked: already submitting");
+      return;
+    }
+    const username = authForm.username.trim().toLowerCase();
+    const password = authForm.password;
+    if (!username || !password) {
+      dbg("[bolao] blocked: missing username/password");
+      showToast("Preencha usuário e senha.", "error");
+      return;
+    }
+    if (!/^[a-z0-9_]{3,20}$/.test(username)) {
+      dbg("[bolao] blocked: invalid username format", username);
+      showToast("Usuário deve ter 3-20 caracteres (letras, números, _).", "error");
+      return;
+    }
+    setAuthSubmitting(true);
+    try {
+      if (authMode === "login") {
+        dbg("[bolao] attempting login for", username);
+        const u = await getJSON(`user:${username}`);
+        dbg("[bolao] login lookup result:", u);
+        if (!u || u.password !== password) {
+          showToast("Usuário ou senha inválidos.", "error");
+          return;
+        }
+        setSession({ username: u.username, displayName: u.displayName, isAdmin: !!u.isAdmin });
+        localStorage.setItem("bolao_session_username", u.username);
+        showToast(`Bem-vindo, ${u.displayName}!`, "success");
+      } else {
+        dbg("[bolao] attempting register for", username);
+        const existing = await getJSON(`user:${username}`);
+        dbg("[bolao] existing user check:", existing);
+        if (existing) {
+          showToast("Esse usuário já existe. Tente entrar ou escolha outro nome de usuário.", "error");
+          return;
+        }
+        const displayName = authForm.displayName.trim() || username;
+        const newUser = { username, password, displayName, isAdmin: false };
+
+        const savedUser = await setJSON(`user:${username}`, newUser);
+        dbg("[bolao] setJSON user result:", savedUser);
+        if (!savedUser) {
+          showToast("Não consegui salvar a conta. Verifique a conexão e tente de novo.", "error");
+          return;
+        }
+
+
+        const check = await getJSON(`user:${username}`);
+        dbg("[bolao] verification read-back:", check);
+        if (!check) {
+          showToast("Algo deu errado ao criar a conta. Tente novamente.", "error");
+          return;
+        }
+
+        setSession({ username, displayName, isAdmin: false });
+        localStorage.setItem("bolao_session_username", username);
+        showToast(`Conta criada! Bem-vindo, ${displayName}!`, "success");
+        dbg("[bolao] session set, entering app");
+        await refresh();
+      }
+      setAuthForm({ username: "", password: "", displayName: "" });
+    } catch (err) {
+      console.error("[bolao] Auth error (caught):", err);
+      showToast("Erro inesperado. Tente novamente.", "error");
+    } finally {
+      setAuthSubmitting(false);
+      dbg("[bolao] submit finished");
+    }
+  }
+
+  /* ---------------- PERFIL ---------------- */
+  function openProfileModal() {
+    const me = data.users.find((u) => u.username === session.username);
+    setProfileForm({
+      displayName: me?.displayName || session.displayName,
+      avatar: me?.avatar || null,
+      newPassword: "",
+      confirmPassword: "",
+    });
+    setProfileModalOpen(true);
+    setProfileMenuOpen(false);
+  }
+
+  async function handleAvatarChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      showToast("Escolha um arquivo de imagem.", "error");
+      return;
+    }
+    setAvatarUploading(true);
+    try {
+      const dataUrl = await resizeImageToDataUrl(file, 160);
+      setProfileForm((f) => ({ ...f, avatar: dataUrl }));
+    } catch (err) {
+      showToast("Não consegui processar essa imagem.", "error");
+    } finally {
+      setAvatarUploading(false);
+    }
+  }
+
+  async function saveProfile() {
+    const newDisplayName = profileForm.displayName.trim();
+    if (!newDisplayName) {
+      showToast("O nome não pode ficar em branco.", "error");
+      return;
+    }
+    const wantsPasswordChange = profileForm.newPassword.length > 0 || profileForm.confirmPassword.length > 0;
+    if (wantsPasswordChange) {
+      if (profileForm.newPassword.length < 4) {
+        showToast("A nova senha precisa ter pelo menos 4 caracteres.", "error");
+        return;
+      }
+      if (profileForm.newPassword !== profileForm.confirmPassword) {
+        showToast("As senhas digitadas não são iguais.", "error");
+        return;
+      }
+    }
+    setProfileSaving(true);
+    try {
+      const me = data.users.find((u) => u.username === session.username);
+      const updatedUser = {
+        ...(me || { username: session.username, password: "", isAdmin: session.isAdmin }),
+        displayName: newDisplayName,
+        avatar: profileForm.avatar || null,
+        ...(wantsPasswordChange ? { password: profileForm.newPassword } : {}),
+      };
+      const ok = await setJSON(`user:${session.username}`, updatedUser);
+      if (!ok) {
+        showToast("Não consegui salvar o perfil. Tente de novo.", "error");
+        return;
+      }
+      setSession({ ...session, displayName: newDisplayName });
+      showToast(wantsPasswordChange ? "Perfil e senha atualizados!" : "Perfil atualizado!", "success");
+      setProfileForm((f) => ({ ...f, newPassword: "", confirmPassword: "" }));
+      setProfileModalOpen(false);
+      await refresh();
+    } catch (err) {
+      showToast("Erro inesperado ao salvar o perfil.", "error");
+    } finally {
+      setProfileSaving(false);
+    }
+  }
+
+  function handleLogout() {
+    setSession(null);
+    setTab("palpitar");
+    setProfileMenuOpen(false);
+    localStorage.removeItem("bolao_session_username");
+  }
+
+  /* ---------------- PICKS ---------------- */
+  async function confirmPick(game) {
+    const key = pickKey(game.id, session.username);
+    const existingPick = data.picksMap[key];
+    const draft = pickDrafts[game.id];
+    const winner = draft?.winner ?? existingPick?.winner;
+    const format = draft?.format ?? existingPick?.format;
+    if (!winner || !format) {
+      showToast("Escolha o time vencedor e o formato.", "error");
+      return;
+    }
+    if (roundLocked(selectedRound)) {
+      showToast("Essa rodada já começou (primeiro jogo em andamento), o palpite foi encerrado.", "error");
+      await refresh();
+      return;
+    }
+    await setJSON(key, { winner, format, confirmedAt: Date.now() });
+    showToast(existingPick ? "Palpite atualizado!" : "Palpite salvo!", "success");
+    await refresh();
+  }
+
+  // admin pode corrigir o palpite de qualquer jogador, mesmo depois do jogo começar
+  async function adminSetUserPick(gameId, username, winner, format) {
+    if (!winner || !format) {
+      showToast("Escolha o vencedor e o formato.", "error");
+      return;
+    }
+    const key = pickKey(gameId, username);
+    const ok = await setJSON(key, { winner, format, confirmedAt: Date.now(), editedByAdmin: true });
+    if (!ok) {
+      showToast("Não consegui salvar o palpite.", "error");
+      return;
+    }
+    showToast("Palpite do jogador atualizado!", "success");
+    setAdminEditingPick(null);
+    await refresh();
+  }
+
+  /* ---------------- ADMIN: COMPETIÇÕES E TIMES ---------------- */
+  async function notifyPersistence(key, successMsg) {
+    const persisted = await verifyPersisted(key);
+    if (persisted) {
+      showToast(successMsg, "success");
+    } else {
+      showToast(
+        '⚠️ Não consegui confirmar que isso foi salvo no banco de dados. Verifique sua internet e tente de novo — clique em "Tentar novamente" no aviso vermelho do topo se ele aparecer.',
+        "error"
+      );
+    }
+  }
+
+  async function adminCreateCompetition() {
+    const name = adminCompName.trim();
+    if (!name) {
+      showToast("Dê um nome para a competição.", "error");
+      return;
+    }
+    const id = "c" + Date.now();
+    const competition = { id, name, createdAt: Date.now(), teams: [] };
+    await setJSON(`competition:${id}`, competition);
+    setAdminCompName("");
+    await notifyPersistence(`competition:${id}`, "Competição criada e salva com sucesso!");
+    await refresh();
+    setAdminCompSelectedId(id);
+    setSelectedCompetitionId(id);
+  }
+
+  async function handleTeamLogoChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      showToast("Escolha um arquivo de imagem.", "error");
+      return;
+    }
+    setTeamLogoUploading(true);
+    try {
+      const dataUrl = await resizeImageToDataUrl(file, 128, "png");
+      setAdminTeamForm((f) => ({ ...f, logo: dataUrl }));
+    } catch (err) {
+      showToast("Não consegui processar essa imagem.", "error");
+    } finally {
+      setTeamLogoUploading(false);
+    }
+  }
+
+  async function adminAddTeam(competition) {
+    const name = adminTeamForm.name.trim();
+    if (!name) {
+      showToast("Dê um nome para o time.", "error");
+      return;
+    }
+    const newTeam = { id: "t" + Date.now(), name, logo: adminTeamForm.logo || null };
+    const updated = { ...competition, teams: [...competition.teams, newTeam] };
+    await setJSON(`competition:${competition.id}`, updated);
+    setAdminTeamForm({ name: "", logo: null });
+    await notifyPersistence(`competition:${competition.id}`, "Time cadastrado e salvo com sucesso!");
+    await refresh();
+  }
+
+  async function adminRemoveTeam(competition, teamId) {
+    const updated = { ...competition, teams: competition.teams.filter((t) => t.id !== teamId) };
+    await setJSON(`competition:${competition.id}`, updated);
+    await notifyPersistence(`competition:${competition.id}`, "Time removido e salvo com sucesso.");
+    await refresh();
+  }
+
+  async function handleEditTeamLogoChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      showToast("Escolha um arquivo de imagem.", "error");
+      return;
+    }
+    setTeamLogoUploading(true);
+    try {
+      const dataUrl = await resizeImageToDataUrl(file, 128, "png");
+      setEditTeamForm((f) => ({ ...f, logo: dataUrl }));
+    } catch (err) {
+      showToast("Não consegui processar essa imagem.", "error");
+    } finally {
+      setTeamLogoUploading(false);
+    }
+  }
+
+  async function adminUpdateTeam(competition, teamId) {
+    const name = editTeamForm.name.trim();
+    if (!name) {
+      showToast("O nome do time não pode ficar em branco.", "error");
+      return;
+    }
+    const updated = {
+      ...competition,
+      teams: competition.teams.map((t) => (t.id === teamId ? { ...t, name, logo: editTeamForm.logo || null } : t)),
+    };
+    await setJSON(`competition:${competition.id}`, updated);
+    await notifyPersistence(`competition:${competition.id}`, "Time atualizado e salvo com sucesso!");
+    setEditingTeamId(null);
+    await refresh();
+  }
+
+  /* ---------------- ADMIN: EXCLUIR COMPETIÇÃO ---------------- */
+  async function adminDeleteCompetition(competitionId) {
+    setDeletingComp(true);
+    try {
+      const rounds = data.rounds.filter((r) => r.competitionId === competitionId);
+      const gameIds = new Set();
+      rounds.forEach((r) => (r.games || []).forEach((g) => gameIds.add(g.id)));
+      const pickKeys = await listKeys("pick:");
+      for (const k of pickKeys) {
+        const gid = k.slice("pick:".length).split("::")[0];
+        if (gameIds.has(gid)) await deleteJSON(k);
+      }
+      for (const r of rounds) {
+        await deleteJSON(`round:${r.id}`);
+      }
+      const ok = await deleteJSON(`competition:${competitionId}`);
+      if (!ok) {
+        showToast("Não consegui excluir a competição. Tente de novo.", "error");
+        return;
+      }
+      setDeleteCompConfirm(false);
+      setAdminCompSelectedId(null);
+      setSelectedCompetitionId(null);
+      setAdminSelectedRoundId(null);
+      setSelectedRoundId(null);
+      showToast("Competição excluída com sucesso.", "success");
+      await refresh();
+    } finally {
+      setDeletingComp(false);
+    }
+  }
+
+  /* ---------------- ADMIN: REMOVER JOGADOR ---------------- */
+  async function adminRemoveUser(username) {
+    if (username === "admin") {
+      showToast("Não é possível remover a conta admin.", "error");
+      return;
+    }
+    if (session.username === username) {
+      showToast("Você não pode remover a própria conta enquanto está logado nela.", "error");
+      return;
+    }
+    setRemovingUser(username);
+    try {
+      const ok = await deleteJSON(`user:${username}`);
+      if (!ok) {
+        showToast("Não consegui remover essa conta. Tente de novo.", "error");
+        return;
+      }
+      const pickKeys = await listKeys("pick:");
+      const theirPickKeys = pickKeys.filter((k) => k.endsWith("::" + username));
+      for (const k of theirPickKeys) {
+        await deleteJSON(k);
+      }
+      showToast("Conta removida com sucesso.", "success");
+      setRemoveUserConfirm(null);
+      await refresh();
+    } finally {
+      setRemovingUser(null);
+    }
+  }
+
+  async function handleAdminUserAvatarChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      showToast("Escolha um arquivo de imagem.", "error");
+      return;
+    }
+    setAdminUserAvatarUploading(true);
+    try {
+      const dataUrl = await resizeImageToDataUrl(file, 160);
+      setAdminEditUserForm((f) => ({ ...f, avatar: dataUrl }));
+    } catch (err) {
+      showToast("Não consegui processar essa imagem.", "error");
+    } finally {
+      setAdminUserAvatarUploading(false);
+    }
+  }
+
+  async function adminUpdateUserProfile(username) {
+    const name = adminEditUserForm.displayName.trim();
+    if (!name) {
+      showToast("O nome não pode ficar em branco.", "error");
+      return;
+    }
+    const target = data.users.find((u) => u.username === username);
+    const updated = {
+      ...(target || { username, password: "", isAdmin: false }),
+      displayName: name,
+      avatar: adminEditUserForm.avatar || null,
+    };
+    const ok = await setJSON(`user:${username}`, updated);
+    if (!ok) {
+      showToast("Não consegui salvar. Tente de novo.", "error");
+      return;
+    }
+    showToast("Jogador atualizado com sucesso!", "success");
+    setAdminEditingUserUsername(null);
+    await refresh();
+  }
+
+  /* ---------------- ADMIN: RODADAS E JOGOS (em lote) ---------------- */
+  async function adminCreateRound(competitionId) {
+    const name = adminRoundName.trim();
+    if (!name) {
+      showToast("Dê um nome para a rodada.", "error");
+      return;
+    }
+    const id = "r" + Date.now();
+    const round = { id, competitionId, name, createdAt: Date.now(), games: [] };
+    await setJSON(`round:${id}`, round);
+    setAdminRoundName("");
+    await notifyPersistence(`round:${id}`, "Rodada criada e salva com sucesso!");
+    await refresh();
+    setAdminSelectedRoundId(id);
+  }
+
+  function addDraftRow() {
+    setDraftGames((rows) => [...rows, { team1Id: "", team2Id: "", startTime: "" }]);
+  }
+  function updateDraftRow(index, field, value) {
+    setDraftGames((rows) => rows.map((r, i) => (i === index ? { ...r, [field]: value } : r)));
+  }
+  function removeDraftRow(index) {
+    setDraftGames((rows) => rows.filter((_, i) => i !== index));
+  }
+
+  async function saveDraftGames(round) {
+    const validRows = draftGames.filter((r) => r.team1Id && r.team2Id && r.startTime);
+    if (validRows.length === 0) {
+      showToast("Preencha ao menos um jogo completo (2 times + horário).", "error");
+      return;
+    }
+    const invalid = validRows.find((r) => r.team1Id === r.team2Id);
+    if (invalid) {
+      showToast("Um jogo não pode ter o mesmo time nos dois lados.", "error");
+      return;
+    }
+    const newGames = validRows.map((r) => ({
+      id: "g" + Date.now() + "_" + Math.random().toString(36).slice(2, 7),
+      team1Id: r.team1Id,
+      team2Id: r.team2Id,
+      startTime: brasiliaLocalToISO(r.startTime),
+      status: "scheduled",
+      resultWinner: null,
+      resultFormat: null,
+    }));
+    const updatedRound = { ...round, games: [...round.games, ...newGames] };
+    await setJSON(`round:${round.id}`, updatedRound);
+    setDraftGames([]);
+    await notifyPersistence(`round:${round.id}`, `${newGames.length} jogo(s) cadastrado(s) e salvo(s) com sucesso!`);
+    await refresh();
+  }
+
+  async function adminSetResult(round, game) {
+    const form = adminResultForm[game.id];
+    if (!form || !form.winner || !form.format) {
+      showToast("Escolha o vencedor e o formato do jogo.", "error");
+      return;
+    }
+    const updatedGames = round.games.map((g) =>
+      g.id === game.id ? { ...g, status: "finished", resultWinner: form.winner, resultFormat: form.format } : g
+    );
+    await setJSON(`round:${round.id}`, { ...round, games: updatedGames });
+    await notifyPersistence(`round:${round.id}`, "Resultado lançado e salvo com sucesso!");
+    setEditingResultGameId(null);
+    await refresh();
+  }
+
+  async function adminUpdateGame(round, gameId) {
+    const form = editGameForm;
+    if (!form.team1Id || !form.team2Id || !form.startTime) {
+      showToast("Preencha os dois times e o horário.", "error");
+      return;
+    }
+    if (form.team1Id === form.team2Id) {
+      showToast("Um jogo não pode ter o mesmo time nos dois lados.", "error");
+      return;
+    }
+    const updatedGames = round.games.map((g) =>
+      g.id === gameId
+        ? { ...g, team1Id: form.team1Id, team2Id: form.team2Id, startTime: brasiliaLocalToISO(form.startTime) }
+        : g
+    );
+    await setJSON(`round:${round.id}`, { ...round, games: updatedGames });
+    await notifyPersistence(`round:${round.id}`, "Jogo atualizado e salvo com sucesso!");
+    setEditingGameId(null);
+    await refresh();
+  }
+
+  /* ---------------- DERIVED ---------------- */
+  const roundsOfSelectedCompetition = data.rounds.filter((r) => r.competitionId === selectedCompetitionId);
+  const ranking = useMemo(
+    () => computeRanking(roundsOfSelectedCompetition, data.users, data.picksMap),
+    [data, selectedCompetitionId]
+  );
+  // classificação "antes" da última rodada finalizada, para saber quem subiu/desceu
+  const previousRanking = useMemo(() => {
+    const finishedRounds = roundsOfSelectedCompetition.filter(isRoundFinished);
+    if (finishedRounds.length === 0) return null;
+    const lastFinished = finishedRounds[finishedRounds.length - 1];
+    const lastFinishedIndex = roundsOfSelectedCompetition.findIndex((r) => r.id === lastFinished.id);
+    const roundsBefore = roundsOfSelectedCompetition.slice(0, lastFinishedIndex);
+    return computeRanking(roundsBefore, data.users, data.picksMap);
+  }, [data, selectedCompetitionId]);
+  const previousPositionByUser = useMemo(() => {
+    const map = {};
+    if (previousRanking) {
+      previousRanking.forEach((r, i) => {
+        map[r.username] = i + 1;
+      });
+    }
+    return map;
+  }, [previousRanking]);
+  const selectedRound = data.rounds.find((r) => r.id === selectedRoundId) || null;
+  const selectedCompetition = getCompetition(data.competitions, selectedCompetitionId);
+
+  const adminSelectedCompetition = getCompetition(data.competitions, adminCompSelectedId);
+  const adminSelectedCompetitionTeamsSorted = adminSelectedCompetition
+    ? [...adminSelectedCompetition.teams].sort((a, b) => a.name.localeCompare(b.name, "pt-BR"))
+    : [];
+  const adminRoundsOfComp = data.rounds.filter((r) => r.competitionId === adminCompSelectedId);
+  const adminSelectedRound = data.rounds.find((r) => r.id === adminSelectedRoundId) || null;
+
+  const firstGameOfRound = (round) =>
+    round && round.games.length > 0
+      ? [...round.games].sort((a, b) => new Date(a.startTime) - new Date(b.startTime))[0]
+      : null;
+  const picksRevealed = (round) => {
+    const fg = firstGameOfRound(round);
+    return fg ? gameStarted(fg) : false;
+  };
+
+  /* ---------------- STYLE HELPERS ---------------- */
+  const medalIcon = (type, size = 16) => {
+    const colorClass = type === "gold" ? "text-amber-400" : type === "silver" ? "text-zinc-300" : "text-orange-500";
+    return <Trophy size={size} className={colorClass} />;
+  };
+
+  /* ---------------------------------------------------------
+     RENDER
+  --------------------------------------------------------- */
+  return (
+    <div className="min-h-screen bg-emerald-950 text-stone-100 font-sans">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        .font-sans { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+        .tabular { font-variant-numeric: tabular-nums; }
+        .scoreboard-glow { box-shadow: inset 0 0 0 1px rgba(217,180,80,0.25); }
+      `}</style>
+
+      {toast && (
+        <div
+          className={`fixed top-4 right-4 left-4 sm:left-auto sm:max-w-sm z-50 px-4 py-3 rounded-lg shadow-lg font-medium text-sm ${
+            toast.kind === "error" ? "bg-red-600 text-white" : toast.kind === "success" ? "bg-emerald-600 text-white" : "bg-zinc-800 text-white"
+          }`}
+        >
+          {toast.msg}
+        </div>
+      )}
+
+      {/* HEADER */}
+      <header className="border-b border-emerald-800/60 bg-emerald-950/90 sticky top-0 z-40 backdrop-blur">
+        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5">
+            <img src={LOGO_DATA_URL} alt="Bolão Kings" className="w-10 h-10 rounded-full object-cover border-2 border-amber-400" />
+            <div>
+              <h1 className="font-display text-xl sm:text-2xl font-semibold tracking-wide leading-none">
+                BOLÃO KINGS <span className="text-amber-400">DE VERDADE</span>
+              </h1>
+              {!loading && storageOk && (
+                <p className="text-[10px] text-emerald-400 flex items-center gap-1 mt-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" /> dados salvos automaticamente
+                </p>
+              )}
+            </div>
+          </div>
+          {session && (
+            <div className="relative">
+              <button
+                onClick={() => setProfileMenuOpen((o) => !o)}
+                className="flex items-center gap-2 pl-1.5 pr-3 py-1.5 rounded-full bg-emerald-900 hover:bg-emerald-800 border border-emerald-700 transition"
+              >
+                {(() => {
+                  const me = data.users.find((u) => u.username === session.username);
+                  return me?.avatar ? (
+                    <img src={me.avatar} alt="" className="w-7 h-7 rounded-full object-cover" />
+                  ) : (
+                    <div className="w-7 h-7 rounded-full bg-emerald-700 flex items-center justify-center">
+                      <User size={14} className="text-stone-200" />
+                    </div>
+                  );
+                })()}
+                <span className="text-sm text-stone-200 hidden sm:inline">
+                  {session.isAdmin && <ShieldCheck size={13} className="inline mr-1 text-amber-400" />}
+                  {session.displayName}
+                </span>
+                <ChevronDown size={14} className="text-stone-400" />
+              </button>
+
+              {profileMenuOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setProfileMenuOpen(false)} />
+                  <div className="absolute right-0 mt-2 w-48 bg-emerald-900 border border-emerald-700 rounded-lg shadow-xl z-50 overflow-hidden">
+                    <button
+                      onClick={openProfileModal}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-stone-200 hover:bg-emerald-800 text-left"
+                    >
+                      <User size={14} /> Editar perfil
+                    </button>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-stone-200 hover:bg-emerald-800 text-left border-t border-emerald-800"
+                    >
+                      <LogOut size={14} /> Sair
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      </header>
+
+      {!storageOk && (
+        <div className="bg-red-700 text-white text-sm px-4 py-3 text-center flex items-center justify-center gap-3 flex-wrap">
+          <span>
+            ⚠️ Não consegui conectar ao banco de dados (Firebase) agora. Enquanto isso não for resolvido, nada vai ser salvo
+            de verdade — verifique sua internet e tente de novo.
+          </span>
+          <button
+            onClick={retryStorageNow}
+            disabled={checkingStorage}
+            className="flex items-center gap-1 bg-white/15 hover:bg-white/25 disabled:opacity-60 px-3 py-1 rounded-md font-medium text-xs shrink-0"
+          >
+            {checkingStorage ? <RefreshCw size={12} className="animate-spin" /> : <RefreshCw size={12} />}
+            {checkingStorage ? "Verificando..." : "Tentar novamente"}
+          </button>
+        </div>
+      )}
+
+      {loading ? (
+        <div className="flex items-center justify-center py-24 text-stone-400 gap-2">
+          <RefreshCw className="animate-spin" size={18} /> Carregando...
+        </div>
+      ) : !session ? (
+        /* ---------------- AUTH SCREEN ---------------- */
+        <div className="max-w-sm mx-auto mt-16 px-4">
+          <div className="bg-emerald-900/40 border border-emerald-800 rounded-xl p-6 scoreboard-glow">
+            <div className="flex mb-6 rounded-lg overflow-hidden border border-emerald-800">
+              <button
+                type="button"
+                onClick={() => setAuthMode("login")}
+                className={`flex-1 py-2 text-sm font-medium ${authMode === "login" ? "bg-amber-500 text-emerald-950" : "bg-emerald-900 text-stone-300"}`}
+              >
+                Entrar
+              </button>
+              <button
+                type="button"
+                onClick={() => setAuthMode("register")}
+                className={`flex-1 py-2 text-sm font-medium ${authMode === "register" ? "bg-amber-500 text-emerald-950" : "bg-emerald-900 text-stone-300"}`}
+              >
+                Criar conta
+              </button>
+            </div>
+            <p className="text-xs text-amber-400/80 mb-3">
+              {authMode === "register"
+                ? "Preencha os campos abaixo e clique no botão \"Criar conta\" do formulário para confirmar."
+                : "Digite seu usuário e senha e clique em \"Entrar\"."}
+            </p>
+            <div className="space-y-3" onKeyDown={(e) => { if (e.key === "Enter") handleAuthSubmit(e); }}>
+              {authMode === "register" && (
+                <input
+                  placeholder="Nome de exibição"
+                  value={authForm.displayName}
+                  onChange={(e) => setAuthForm({ ...authForm, displayName: e.target.value })}
+                  className="w-full bg-emerald-950 border border-emerald-800 rounded-md px-3 py-2 text-sm outline-none focus:border-amber-400"
+                />
+              )}
+              <input
+                placeholder="Usuário"
+                value={authForm.username}
+                onChange={(e) => setAuthForm({ ...authForm, username: e.target.value })}
+                className="w-full bg-emerald-950 border border-emerald-800 rounded-md px-3 py-2 text-sm outline-none focus:border-amber-400"
+              />
+              <input
+                placeholder="Senha"
+                type="password"
+                value={authForm.password}
+                onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
+                className="w-full bg-emerald-950 border border-emerald-800 rounded-md px-3 py-2 text-sm outline-none focus:border-amber-400"
+              />
+              <button
+                type="button"
+                onClick={handleAuthSubmit}
+                disabled={authSubmitting}
+                className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 disabled:opacity-60 disabled:cursor-not-allowed text-emerald-950 font-semibold py-2 rounded-md transition"
+              >
+                {authSubmitting ? (
+                  <RefreshCw size={16} className="animate-spin" />
+                ) : authMode === "login" ? (
+                  <LogIn size={16} />
+                ) : (
+                  <UserPlus size={16} />
+                )}
+                {authSubmitting ? "Aguarde..." : authMode === "login" ? "Entrar" : "Criar conta"}
+              </button>
+            </div>
+            <p className="text-[10px] text-stone-700 mt-4 text-center">build v17 (timeout de segurança)</p>
+          </div>
+        </div>
+      ) : (
+        /* ---------------- MAIN APP ---------------- */
+        <div className="max-w-5xl mx-auto px-4 py-6">
+          {/* NAV */}
+          <nav className="flex flex-wrap gap-2 mb-6 border-b border-emerald-800/60 pb-3">
+            {[
+              { id: "palpitar", label: "Palpitar", icon: <CheckCircle2 size={15} /> },
+              { id: "ver", label: "Palpites da Rodada", icon: <Eye size={15} /> },
+              { id: "ranking", label: "Classificação", icon: <Trophy size={15} /> },
+              { id: "stats", label: "Estatísticas", icon: <BarChart3 size={15} /> },
+              ...(session.isAdmin ? [{ id: "admin", label: "Admin", icon: <ShieldCheck size={15} /> }] : []),
+            ].map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition ${
+                  tab === t.id ? "bg-amber-500 text-emerald-950" : "bg-emerald-900/60 text-stone-300 hover:bg-emerald-800"
+                }`}
+              >
+                {t.icon} {t.label}
+              </button>
+            ))}
+          </nav>
+
+          {/* SELETOR DE COMPETIÇÃO + RODADA (palpitar/ver/ranking) */}
+          {(tab === "palpitar" || tab === "ver" || tab === "ranking") && (
+            <div className="mb-5 flex items-center gap-2 flex-wrap">
+              <Trophy size={16} className="text-stone-400" />
+              <select
+                value={selectedCompetitionId || ""}
+                onChange={(e) => setSelectedCompetitionId(e.target.value)}
+                className="bg-emerald-900 border border-emerald-800 rounded-md px-3 py-1.5 text-sm outline-none"
+              >
+                {data.competitions.length === 0 && <option>Nenhuma competição cadastrada</option>}
+                {data.competitions.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+              {(tab === "palpitar" || tab === "ver") && (
+                <>
+                  <Calendar size={16} className="text-stone-400 ml-2" />
+                  <select
+                    value={selectedRoundId || ""}
+                    onChange={(e) => setSelectedRoundId(e.target.value)}
+                    className="bg-emerald-900 border border-emerald-800 rounded-md px-3 py-1.5 text-sm outline-none"
+                  >
+                    {roundsOfSelectedCompetition.length === 0 && <option>Nenhuma rodada cadastrada</option>}
+                    {roundsOfSelectedCompetition.map((r) => (
+                      <option key={r.id} value={r.id}>
+                        {r.name}
+                      </option>
+                    ))}
+                  </select>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* ---------- PALPITAR ---------- */}
+          {tab === "palpitar" && (
+            <div className="space-y-3">
+              <p className="text-xs text-stone-400 mb-2">
+                Pontuação: <b>3 pts</b> por acertar o vencedor · <b>+3 pts</b> extra se o jogo terminar no{" "}
+                <b>{FORMAT_SHOOTOUT}</b> e você marcar {FORMAT_SHOOTOUT} · <b>+2 pts</b> extra se terminar no{" "}
+                <b>{FORMAT_MATCHBALL}</b> e você marcar {FORMAT_MATCHBALL}. Você pode mudar seus palpites à vontade até o{" "}
+                <b>primeiro jogo da rodada</b> começar — depois disso, todos os jogos dessa rodada travam juntos. Se faltar
+                palpite quando isso acontecer, é <b>WO</b> (0 pontos).
+              </p>
+              {!selectedRound || selectedRound.games.length === 0 ? (
+                <div className="text-stone-400 text-sm py-10 text-center">Nenhum jogo cadastrado nessa rodada ainda.</div>
+              ) : (
+                [...selectedRound.games]
+                  .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))
+                  .map((game) => {
+                    const key = pickKey(game.id, session.username);
+                    const myPick = data.picksMap[key];
+                    const started = roundLocked(selectedRound);
+                    const outcome = computeGameOutcome(game, myPick, started);
+                    const team1 = getTeam(selectedCompetition, game.team1Id);
+                    const team2 = getTeam(selectedCompetition, game.team2Id);
+                    return (
+                      <div key={game.id} className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                        <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
+                          <div className="flex items-center justify-center gap-4 sm:gap-6 flex-1 min-w-[220px]">
+                            <div className="flex flex-col items-center gap-1.5 w-20 sm:w-24">
+                              <TeamBadge team={team1} size={52} />
+                              <span className="font-display text-sm text-center leading-tight">{team1?.name || "?"}</span>
+                            </div>
+                            <span className="text-stone-500 font-display text-sm">vs</span>
+                            <div className="flex flex-col items-center gap-1.5 w-20 sm:w-24">
+                              <TeamBadge team={team2} size={52} />
+                              <span className="font-display text-sm text-center leading-tight">{team2?.name || "?"}</span>
+                            </div>
+                          </div>
+                          <div className="text-xs text-stone-400 flex items-center gap-1">
+                            <Clock size={13} /> {fmtDate(game.startTime)}
+                            {started && <Lock size={13} className="ml-1 text-red-400" />}
+                          </div>
+                        </div>
+
+                        {started ? (
+                          myPick ? (
+                            <div className="flex items-center justify-between flex-wrap gap-2">
+                              <div className="text-sm bg-emerald-950 border border-emerald-700 rounded-md px-3 py-2 inline-flex items-center gap-2">
+                                <CheckCircle2 size={15} className="text-emerald-400" />
+                                Palpite: <b>{myPick.winner === "team1" ? team1?.name : team2?.name}</b> vencendo por{" "}
+                                <b>{myPick.format}</b>
+                              </div>
+                              {game.status === "finished" && (
+                                <span
+                                  className={`text-xs font-semibold px-2 py-1 rounded ${
+                                    outcome.status === "correct" ? "bg-emerald-600" : "bg-red-600"
+                                  }`}
+                                >
+                                  {outcome.status === "correct" ? `+${outcome.points} pts` : "0 pts"}
+                                </span>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="text-sm bg-red-950/60 border border-red-800 text-red-300 rounded-md px-3 py-2 inline-flex items-center gap-2">
+                              <Lock size={14} /> Tempo esgotado — WO (0 pontos)
+                            </div>
+                          )
+                        ) : (
+                          <div className="space-y-3">
+                            {myPick && (
+                              <div className="flex items-center justify-between flex-wrap gap-2">
+                                <p className="text-xs text-emerald-400 flex items-center gap-1">
+                                  <CheckCircle2 size={13} /> Palpite salvo — você pode mudar até o primeiro jogo da rodada começar.
+                                </p>
+                                <button
+                                  onClick={() => confirmPick(game)}
+                                  className="text-xs text-stone-400 hover:text-amber-400 underline underline-offset-2"
+                                >
+                                  Atualizar palpite
+                                </button>
+                              </div>
+                            )}
+                            <div>
+                              <p className="text-xs text-stone-500 mb-1.5">Vencedor</p>
+                              <div className="flex flex-wrap gap-2">
+                                {[
+                                  { value: "team1", team: team1 },
+                                  { value: "team2", team: team2 },
+                                ].map((opt) => {
+                                  const selected = (pickDrafts[game.id]?.winner ?? myPick?.winner) === opt.value;
+                                  return (
+                                    <button
+                                      key={opt.value}
+                                      type="button"
+                                      onClick={() =>
+                                        setPickDrafts({
+                                          ...pickDrafts,
+                                          [game.id]: { ...pickDrafts[game.id], winner: opt.value },
+                                        })
+                                      }
+                                      className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm transition ${
+                                        selected
+                                          ? "bg-amber-500 border-amber-400 text-emerald-950 font-semibold"
+                                          : "bg-emerald-950 border-emerald-800 text-stone-200 hover:border-emerald-600"
+                                      }`}
+                                    >
+                                      <span
+                                        className={`w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                                          selected ? "border-emerald-950" : "border-stone-500"
+                                        }`}
+                                      >
+                                        {selected && <span className="w-1.5 h-1.5 rounded-full bg-emerald-950" />}
+                                      </span>
+                                      <TeamBadge team={opt.team} size={28} />
+                                      {opt.team?.name}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+
+                            <div>
+                              <p className="text-xs text-stone-500 mb-1.5">Formato</p>
+                              <div className="flex flex-wrap gap-2">
+                                {[FORMAT_MATCHBALL, FORMAT_SHOOTOUT].map((fmt) => {
+                                  const selected = (pickDrafts[game.id]?.format ?? myPick?.format) === fmt;
+                                  return (
+                                    <button
+                                      key={fmt}
+                                      type="button"
+                                      onClick={() =>
+                                        setPickDrafts({ ...pickDrafts, [game.id]: { ...pickDrafts[game.id], format: fmt } })
+                                      }
+                                      className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm transition ${
+                                        selected
+                                          ? "bg-amber-500 border-amber-400 text-emerald-950 font-semibold"
+                                          : "bg-emerald-950 border-emerald-800 text-stone-200 hover:border-emerald-600"
+                                      }`}
+                                    >
+                                      <span
+                                        className={`w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                                          selected ? "border-emerald-950" : "border-stone-500"
+                                        }`}
+                                      >
+                                        {selected && <span className="w-1.5 h-1.5 rounded-full bg-emerald-950" />}
+                                      </span>
+                                      {fmt}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+
+                            {!myPick && (
+                              <button
+                                onClick={() => confirmPick(game)}
+                                className="bg-amber-500 hover:bg-amber-400 text-emerald-950 text-sm font-semibold px-4 py-1.5 rounded-md"
+                              >
+                                Confirmar palpite
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })
+              )}
+            </div>
+          )}
+
+          {/* ---------- VER PALPITES ---------- */}
+          {tab === "ver" && (
+            <div>
+              {!selectedRound || selectedRound.games.length === 0 ? (
+                <div className="text-stone-400 text-sm py-10 text-center">Nenhum jogo cadastrado nessa rodada ainda.</div>
+              ) : !picksRevealed(selectedRound) && !session.isAdmin ? (
+                <div className="text-stone-400 text-sm py-10 text-center bg-emerald-900/30 border border-emerald-800 rounded-lg">
+                  <Lock className="mx-auto mb-2 text-stone-500" size={22} />
+                  Os palpites serão revelados quando o primeiro jogo da rodada começar
+                  {firstGameOfRound(selectedRound) && ` (${fmtDate(firstGameOfRound(selectedRound).startTime)})`}.
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  {session.isAdmin && !picksRevealed(selectedRound) && (
+                    <p className="text-xs text-amber-400/80 mb-2 flex items-center gap-1">
+                      <ShieldCheck size={13} /> Como admin, você já vê e pode editar os palpites antes da revelação pros
+                      demais jogadores.
+                    </p>
+                  )}
+                  {session.isAdmin && (
+                    <p className="text-xs text-stone-500 mb-2">Clique num palpite (ou em "editar") pra corrigi-lo.</p>
+                  )}
+                  <table className="w-full text-sm border-collapse">
+                    <thead>
+                      <tr className="text-left text-stone-400 border-b border-emerald-800">
+                        <th className="py-2 pr-4">Jogador</th>
+                        {[...selectedRound.games]
+                          .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))
+                          .map((g) => (
+                            <th key={g.id} className="py-2 pr-4 font-normal">
+                              {teamLabel(selectedCompetition, g.team1Id)} x {teamLabel(selectedCompetition, g.team2Id)}
+                            </th>
+                          ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.users.map((u) => (
+                        <tr key={u.username} className="border-b border-emerald-900/60">
+                          <td className="py-2 pr-4 font-medium whitespace-nowrap">{u.displayName}</td>
+                          {[...selectedRound.games]
+                            .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))
+                            .map((g) => {
+                              const p = data.picksMap[pickKey(g.id, u.username)];
+                              const t1 = getTeam(selectedCompetition, g.team1Id);
+                              const t2 = getTeam(selectedCompetition, g.team2Id);
+                              const isEditingThis = adminEditingPick?.gameId === g.id && adminEditingPick?.username === u.username;
+
+                              if (isEditingThis) {
+                                return (
+                                  <td key={g.id} className="py-2 pr-4">
+                                    <div className="flex flex-col gap-1 bg-emerald-950 border border-amber-500 rounded-md p-2 min-w-[150px]">
+                                      <select
+                                        value={adminPickForm.winner}
+                                        onChange={(e) => setAdminPickForm({ ...adminPickForm, winner: e.target.value })}
+                                        className="bg-emerald-900 border border-emerald-800 rounded px-1.5 py-1 text-xs"
+                                      >
+                                        <option value="">Vencedor...</option>
+                                        <option value="team1">{t1?.name}</option>
+                                        <option value="team2">{t2?.name}</option>
+                                      </select>
+                                      <select
+                                        value={adminPickForm.format}
+                                        onChange={(e) => setAdminPickForm({ ...adminPickForm, format: e.target.value })}
+                                        className="bg-emerald-900 border border-emerald-800 rounded px-1.5 py-1 text-xs"
+                                      >
+                                        <option value="">Formato...</option>
+                                        <option value={FORMAT_MATCHBALL}>{FORMAT_MATCHBALL}</option>
+                                        <option value={FORMAT_SHOOTOUT}>{FORMAT_SHOOTOUT}</option>
+                                      </select>
+                                      <div className="flex gap-1">
+                                        <button
+                                          onClick={() =>
+                                            adminSetUserPick(g.id, u.username, adminPickForm.winner, adminPickForm.format)
+                                          }
+                                          className="flex-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 text-xs font-semibold py-1 rounded"
+                                        >
+                                          Salvar
+                                        </button>
+                                        <button
+                                          onClick={() => setAdminEditingPick(null)}
+                                          className="flex-1 bg-emerald-800 hover:bg-emerald-700 text-xs py-1 rounded"
+                                        >
+                                          Cancelar
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </td>
+                                );
+                              }
+
+                              const cellContent = !p ? (
+                                roundLocked(selectedRound) ? (
+                                  <span className="text-red-400 text-xs font-semibold">WO</span>
+                                ) : (
+                                  <span className="text-stone-600 text-xs">aguardando</span>
+                                )
+                              ) : (
+                                <span className="text-xs flex items-center gap-1.5 flex-wrap">
+                                  <span>
+                                    {p.winner === "team1" ? t1?.name : t2?.name} · {p.format}
+                                  </span>
+                                  {g.status === "finished" &&
+                                    (() => {
+                                      const outcome = computeGameOutcome(g, p, true);
+                                      return (
+                                        <span
+                                          className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${
+                                            outcome.status === "correct" ? "bg-emerald-600" : "bg-red-600"
+                                          }`}
+                                        >
+                                          {outcome.status === "correct" ? `+${outcome.points} pts` : "0 pts"}
+                                        </span>
+                                      );
+                                    })()}
+                                </span>
+                              );
+
+                              return (
+                                <td key={g.id} className="py-2 pr-4">
+                                  {session.isAdmin ? (
+                                    <button
+                                      onClick={() => {
+                                        setAdminEditingPick({ gameId: g.id, username: u.username });
+                                        setAdminPickForm({ winner: p?.winner || "", format: p?.format || "" });
+                                      }}
+                                      className="flex items-center gap-1 hover:bg-emerald-900/60 rounded px-1.5 py-0.5 -mx-1.5"
+                                      title="Editar palpite"
+                                    >
+                                      {cellContent}
+                                      <Pencil size={11} className="text-stone-500" />
+                                    </button>
+                                  ) : (
+                                    cellContent
+                                  )}
+                                </td>
+                              );
+                            })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ---------- RANKING ---------- */}
+          {tab === "ranking" && (
+            <div>
+              <div className="rounded-lg border border-emerald-800 overflow-hidden">
+                <div className="grid grid-cols-[44px_1fr_72px_56px_56px_56px] sm:grid-cols-[52px_1fr_84px_64px_64px_64px] gap-2 px-3 py-2 bg-emerald-900/70 text-stone-400 text-[11px] sm:text-xs uppercase tracking-wide">
+                  <div>#</div>
+                  <div>Jogador</div>
+                  <div className="text-center">Pontos</div>
+                  <div className="flex flex-col items-center gap-0.5">
+                    {medalIcon("gold", 15)}
+                    <span>Ouro</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-0.5">
+                    {medalIcon("silver", 15)}
+                    <span>Prata</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-0.5">
+                    {medalIcon("bronze", 15)}
+                    <span>Bronze</span>
+                  </div>
+                </div>
+
+                {ranking.map((r, i) => {
+                  const n = ranking.length;
+                  const isPodium = i < 3 && n >= 3;
+                  const isRelegation = n > 3 && i >= n - 3;
+                  const rowClass = isPodium
+                    ? i === 0
+                      ? "bg-amber-500/15 border-l-4 border-l-amber-400"
+                      : i === 1
+                      ? "bg-zinc-400/10 border-l-4 border-l-zinc-300"
+                      : "bg-orange-600/10 border-l-4 border-l-orange-500"
+                    : isRelegation
+                    ? "bg-red-600/10 border-l-4 border-l-red-500"
+                    : "border-l-4 border-l-transparent";
+                  const prevPos = previousPositionByUser[r.username];
+                  const currentPos = i + 1;
+                  let moveIndicator = null;
+                  if (prevPos !== undefined) {
+                    if (prevPos > currentPos) {
+                      moveIndicator = (
+                        <span
+                          className="text-emerald-400 text-[10px] font-bold"
+                          title={`Subiu ${prevPos - currentPos} posição(ões)`}
+                        >
+                          ▲{prevPos - currentPos}
+                        </span>
+                      );
+                    } else if (prevPos < currentPos) {
+                      moveIndicator = (
+                        <span
+                          className="text-red-400 text-[10px] font-bold"
+                          title={`Desceu ${currentPos - prevPos} posição(ões)`}
+                        >
+                          ▼{currentPos - prevPos}
+                        </span>
+                      );
+                    } else {
+                      moveIndicator = (
+                        <span className="text-stone-500 text-[10px] font-bold" title="Manteve a posição">
+                          ─
+                        </span>
+                      );
+                    }
+                  }
+                  return (
+                    <div
+                      key={r.username}
+                      className={`grid grid-cols-[44px_1fr_72px_56px_56px_56px] sm:grid-cols-[52px_1fr_84px_64px_64px_64px] gap-2 items-center px-3 py-2.5 ${
+                        i > 0 ? "border-t border-emerald-900/60" : ""
+                      } ${rowClass}`}
+                    >
+                      <div className="flex flex-col items-start gap-0.5">
+                        {isPodium ? (
+                          medalIcon(i === 0 ? "gold" : i === 1 ? "silver" : "bronze", 22)
+                        ) : (
+                          <span className="font-display tabular">{currentPos}º</span>
+                        )}
+                        {moveIndicator}
+                      </div>
+                      <div className="font-medium flex items-center gap-2 min-w-0">
+                        {r.avatar ? (
+                          <img src={r.avatar} alt="" className="w-9 h-9 rounded-full object-cover shrink-0" />
+                        ) : (
+                          <div className="w-9 h-9 rounded-full bg-emerald-800 flex items-center justify-center shrink-0">
+                            <User size={18} className="text-stone-400" />
+                          </div>
+                        )}
+                        <span className="truncate">{r.displayName}</span>
+                      </div>
+                      <div className="text-center font-display tabular text-lg">{r.totalPoints}</div>
+                      <div className="text-center font-display tabular">{r.medals.gold}</div>
+                      <div className="text-center font-display tabular">{r.medals.silver}</div>
+                      <div className="text-center font-display tabular">{r.medals.bronze}</div>
+                    </div>
+                  );
+                })}
+
+                {ranking.length === 0 && (
+                  <div className="text-center text-stone-500 py-10 text-sm">Nenhum jogador cadastrado ainda.</div>
+                )}
+              </div>
+              <div className="text-xs text-stone-500 mt-4 space-y-1">
+                <p>🥇 Zona de pódio (1º ao 3º) · 🟥 Zona de rebaixamento (3 últimos)</p>
+                <p>Empate em pontos é desempatado por: ouro → prata → bronze acumulados.</p>
+                <p>
+                  <span className="text-emerald-400 font-bold">▲</span> subiu · <span className="text-red-400 font-bold">▼</span> desceu ·{" "}
+                  <span className="text-stone-500 font-bold">─</span> manteve a posição, tudo comparado com a última rodada
+                  finalizada.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* ---------- ESTATÍSTICAS ---------- */}
+          {tab === "stats" && (
+            <div>
+              {!statsSelectedUsername ? (
+                <>
+                  <p className="text-xs text-stone-400 mb-4">
+                    Win-rate considerando todos os palpites já decididos, em todas as competições cadastradas. Clique num
+                    jogador pra ver o perfil completo.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    {data.users.map((u) => {
+                      const stats = computeUserStats(u.username, data.competitions, data.rounds, data.picksMap);
+                      return (
+                        <button
+                          key={u.username}
+                          onClick={() => setStatsSelectedUsername(u.username)}
+                          className="bg-emerald-900/40 hover:bg-emerald-900/70 border border-emerald-800 rounded-lg p-4 text-left transition"
+                        >
+                          <div className="flex items-center gap-3 mb-3">
+                            {u.avatar ? (
+                              <img src={u.avatar} alt="" className="w-12 h-12 rounded-full object-cover" />
+                            ) : (
+                              <div className="w-12 h-12 rounded-full bg-emerald-800 flex items-center justify-center shrink-0">
+                                <User size={22} className="text-stone-400" />
+                              </div>
+                            )}
+                            <div className="min-w-0">
+                              <div className="font-display truncate">{u.displayName}</div>
+                              <div className="text-xs text-stone-500">{stats.totalDecided} palpite(s) decidido(s)</div>
+                            </div>
+                          </div>
+                          <div className="flex items-end gap-1.5">
+                            <span className="font-display text-3xl tabular text-amber-400">
+                              {stats.winRate === null ? "—" : `${stats.winRate.toFixed(0)}%`}
+                            </span>
+                            <span className="text-xs text-stone-500 mb-1">de acerto</span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                    {data.users.length === 0 && (
+                      <p className="text-stone-500 text-sm py-10 text-center col-span-full">Nenhum jogador cadastrado ainda.</p>
+                    )}
+                  </div>
+                </>
+              ) : (
+                (() => {
+                  const u = data.users.find((x) => x.username === statsSelectedUsername);
+                  if (!u) {
+                    setStatsSelectedUsername(null);
+                    return null;
+                  }
+                  const stats = computeUserStats(u.username, data.competitions, data.rounds, data.picksMap);
+                  const similarUsers = computeSimilarUsers(u.username, data.users, data.rounds, data.picksMap);
+                  const mostDifferentUsers = [...similarUsers].sort((a, b) => {
+                    const diffA = a.comparedCount - a.sameCount;
+                    const diffB = b.comparedCount - b.sameCount;
+                    return diffB - diffA || b.comparedCount - a.comparedCount;
+                  });
+                  return (
+                    <div>
+                      <button
+                        onClick={() => setStatsSelectedUsername(null)}
+                        className="flex items-center gap-1 text-sm text-stone-400 hover:text-stone-200 mb-4"
+                      >
+                        <ArrowLeft size={15} /> Voltar
+                      </button>
+
+                      <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-5 mb-5">
+                        <div className="flex items-center gap-4 flex-wrap">
+                          {u.avatar ? (
+                            <img src={u.avatar} alt="" className="w-16 h-16 rounded-full object-cover" />
+                          ) : (
+                            <div className="w-16 h-16 rounded-full bg-emerald-800 flex items-center justify-center shrink-0">
+                              <User size={30} className="text-stone-400" />
+                            </div>
+                          )}
+                          <div>
+                            <div className="font-display text-xl">{u.displayName}</div>
+                            <div className="text-xs text-stone-500">
+                              {stats.correct} acerto(s) em {stats.totalDecided} palpite(s) decidido(s)
+                            </div>
+                          </div>
+                          <div className="ml-auto text-center">
+                            <div className="font-display text-4xl tabular text-amber-400">
+                              {stats.winRate === null ? "—" : `${stats.winRate.toFixed(0)}%`}
+                            </div>
+                            <div className="text-xs text-stone-500">win-rate geral</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                          <h3 className="font-display text-lg mb-3">Times que mais palpitou a favor</h3>
+                          {stats.mostPicked.length === 0 ? (
+                            <p className="text-stone-500 text-sm">Ainda não há palpites suficientes.</p>
+                          ) : (
+                            <div className="space-y-2">
+                              {stats.mostPicked.map((t) => (
+                                <div key={t.name} className="flex items-center gap-2">
+                                  <TeamBadge team={t} size={24} />
+                                  <span className="text-sm flex-1 truncate">{t.name}</span>
+                                  <span className="font-display tabular text-sm text-stone-300">{t.count}x</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                          <h3 className="font-display text-lg mb-3">Times contra os quais mais escolheu o adversário</h3>
+                          {stats.leastPicked.length === 0 ? (
+                            <p className="text-stone-500 text-sm">Ainda não há palpites suficientes.</p>
+                          ) : (
+                            <div className="space-y-2">
+                              {stats.leastPicked.map((t) => (
+                                <div key={t.name} className="flex items-center gap-2">
+                                  <TeamBadge team={t} size={24} />
+                                  <span className="text-sm flex-1 truncate">{t.name}</span>
+                                  <span className="font-display tabular text-sm text-stone-300">{t.count}x</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                          <h3 className="font-display text-lg mb-3">Times que mais te deram pontos</h3>
+                          {stats.mostPointsTeams.length === 0 ? (
+                            <p className="text-stone-500 text-sm">Ainda não há resultados suficientes.</p>
+                          ) : (
+                            <div className="space-y-2">
+                              {stats.mostPointsTeams.map((t) => (
+                                <div key={t.name} className="flex items-center gap-2">
+                                  <TeamBadge team={t} size={24} />
+                                  <span className="text-sm flex-1 truncate">{t.name}</span>
+                                  <span className="font-display tabular text-sm text-emerald-400">{t.points} pts</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                          <h3 className="font-display text-lg mb-3">Times que menos te deram pontos</h3>
+                          {stats.leastPointsTeams.length === 0 ? (
+                            <p className="text-stone-500 text-sm">Ainda não há resultados suficientes.</p>
+                          ) : (
+                            <div className="space-y-2">
+                              {stats.leastPointsTeams.map((t) => (
+                                <div key={t.name} className="flex items-center gap-2">
+                                  <TeamBadge team={t} size={24} />
+                                  <span className="text-sm flex-1 truncate">{t.name}</span>
+                                  <span className="font-display tabular text-sm text-red-400">{t.points} pts</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                        <h3 className="font-display text-lg mb-3">Quem mais palpita igual a {u.displayName}</h3>
+                        {similarUsers.length === 0 ? (
+                          <p className="text-stone-500 text-sm">
+                            Ainda não há confrontos em comum com outros jogadores pra comparar.
+                          </p>
+                        ) : (
+                          <div className="space-y-2">
+                            {similarUsers.slice(0, 5).map((s, i) => (
+                              <div key={s.username} className="flex items-center gap-2">
+                                <span className="font-display tabular text-stone-500 w-5 text-sm">{i + 1}º</span>
+                                {s.avatar ? (
+                                  <img src={s.avatar} alt="" className="w-7 h-7 rounded-full object-cover" />
+                                ) : (
+                                  <div className="w-7 h-7 rounded-full bg-emerald-800 flex items-center justify-center shrink-0">
+                                    <User size={14} className="text-stone-400" />
+                                  </div>
+                                )}
+                                <span className="text-sm flex-1 truncate">{s.displayName}</span>
+                                <span className="font-display tabular text-sm text-amber-400">
+                                  {s.sameCount}/{s.comparedCount} iguais
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        <p className="text-[11px] text-stone-500 mt-3">
+                          "Iguais" = mesmo vencedor e mesmo formato, contando só confrontos em que os dois palpitaram.
+                        </p>
+                      </div>
+
+                      <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                        <h3 className="font-display text-lg mb-3">Quem mais palpita diferente de {u.displayName}</h3>
+                        {mostDifferentUsers.length === 0 ? (
+                          <p className="text-stone-500 text-sm">
+                            Ainda não há confrontos em comum com outros jogadores pra comparar.
+                          </p>
+                        ) : (
+                          <div className="space-y-2">
+                            {mostDifferentUsers.slice(0, 5).map((s, i) => (
+                              <div key={s.username} className="flex items-center gap-2">
+                                <span className="font-display tabular text-stone-500 w-5 text-sm">{i + 1}º</span>
+                                {s.avatar ? (
+                                  <img src={s.avatar} alt="" className="w-7 h-7 rounded-full object-cover" />
+                                ) : (
+                                  <div className="w-7 h-7 rounded-full bg-emerald-800 flex items-center justify-center shrink-0">
+                                    <User size={14} className="text-stone-400" />
+                                  </div>
+                                )}
+                                <span className="text-sm flex-1 truncate">{s.displayName}</span>
+                                <span className="font-display tabular text-sm text-red-400">
+                                  {s.comparedCount - s.sameCount}/{s.comparedCount} diferentes
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        <p className="text-[11px] text-stone-500 mt-3">
+                          "Diferentes" = vencedor ou formato diferente, contando só confrontos em que os dois palpitaram.
+                        </p>
+                      </div>
+                    </div>
+                    </div>
+                  );
+                })()
+              )}
+            </div>
+          )}
+
+          {/* ---------- ADMIN ---------- */}
+          {tab === "admin" && session.isAdmin && (
+            <div className="space-y-6">
+              {/* SUB-ABAS DO ADMIN */}
+              <div className="flex gap-2 border-b border-emerald-800/60 pb-3">
+                {[
+                  { id: "competicoes", label: "Competições e Times", icon: <Trophy size={14} /> },
+                  { id: "jogos", label: "Rodadas e Jogos", icon: <Calendar size={14} /> },
+                  { id: "resultados", label: "Resultados", icon: <CheckCircle2 size={14} /> },
+                ].map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => setAdminSubTab(t.id)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition ${
+                      adminSubTab === t.id ? "bg-amber-500 text-emerald-950" : "bg-emerald-900/60 text-stone-300 hover:bg-emerald-800"
+                    }`}
+                  >
+                    {t.icon} {t.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* ---------- SUB-ABA: COMPETIÇÕES E TIMES ---------- */}
+              {adminSubTab === "competicoes" && (
+                <div className="space-y-6">
+                  <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                    <h3 className="font-display text-lg mb-3">Nova competição</h3>
+                    <div className="flex gap-2 flex-wrap">
+                      <input
+                        placeholder="Ex: Campeonato de Vôlei 2026"
+                        value={adminCompName}
+                        onChange={(e) => setAdminCompName(e.target.value)}
+                        className="bg-emerald-950 border border-emerald-800 rounded-md px-3 py-1.5 text-sm flex-1 min-w-[200px]"
+                      />
+                      <button
+                        onClick={adminCreateCompetition}
+                        className="flex items-center gap-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-semibold px-3 py-1.5 rounded-md text-sm"
+                      >
+                        <Plus size={15} /> Criar
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <Trophy size={16} className="text-stone-400" />
+                    <select
+                      value={adminCompSelectedId || ""}
+                      onChange={(e) => setAdminCompSelectedId(e.target.value)}
+                      className="bg-emerald-900 border border-emerald-800 rounded-md px-3 py-1.5 text-sm outline-none"
+                    >
+                      {data.competitions.length === 0 && <option>Nenhuma competição</option>}
+                      {data.competitions.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                    {adminSelectedCompetition && !deleteCompConfirm && (
+                      <button
+                        onClick={() => setDeleteCompConfirm(true)}
+                        title="Excluir competição"
+                        className="p-1.5 rounded-md text-red-400 hover:bg-red-900/40"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    )}
+                  </div>
+
+                  {adminSelectedCompetition && deleteCompConfirm && (
+                    <div className="bg-red-950/50 border border-red-800 rounded-lg p-4">
+                      <p className="text-sm mb-3">
+                        Excluir <b>"{adminSelectedCompetition.name}"</b>? Isso apaga também todas as rodadas, jogos e palpites dessa competição. Não dá para desfazer.
+                      </p>
+                      <div className="flex gap-2">
+                        <button
+                          disabled={deletingComp}
+                          onClick={() => adminDeleteCompetition(adminSelectedCompetition.id)}
+                          className="bg-red-600 hover:bg-red-500 text-white font-semibold px-3 py-1.5 rounded-md text-sm disabled:opacity-60"
+                        >
+                          {deletingComp ? "Excluindo..." : "Sim, excluir tudo"}
+                        </button>
+                        <button
+                          disabled={deletingComp}
+                          onClick={() => setDeleteCompConfirm(false)}
+                          className="bg-emerald-900 hover:bg-emerald-800 px-3 py-1.5 rounded-md text-sm"
+                        >
+                          Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {adminSelectedCompetition && (
+                    <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                      <h3 className="font-display text-lg mb-3">
+                        Times de "{adminSelectedCompetition.name}" ({adminSelectedCompetition.teams.length})
+                      </h3>
+
+                      <div className="flex flex-wrap items-center gap-3 mb-4 pb-4 border-b border-emerald-800/60">
+                        <div className="relative">
+                          {adminTeamForm.logo ? (
+                            <img src={adminTeamForm.logo} alt="" className="w-12 h-12 rounded-full object-cover border-2 border-amber-400" />
+                          ) : (
+                            <div className="w-12 h-12 rounded-full bg-emerald-800 border-2 border-amber-400 flex items-center justify-center">
+                              <Shield size={18} className="text-stone-300" />
+                            </div>
+                          )}
+                          <label
+                            htmlFor="team-logo-upload"
+                            className="absolute -bottom-1 -right-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 rounded-full p-1 cursor-pointer border-2 border-emerald-950"
+                          >
+                            {teamLogoUploading ? <RefreshCw size={11} className="animate-spin" /> : <Camera size={11} />}
+                          </label>
+                          <input id="team-logo-upload" type="file" accept="image/*" onChange={handleTeamLogoChange} className="hidden" />
+                        </div>
+                        <input
+                          placeholder="Nome do time"
+                          value={adminTeamForm.name}
+                          onChange={(e) => setAdminTeamForm({ ...adminTeamForm, name: e.target.value })}
+                          className="bg-emerald-950 border border-emerald-800 rounded-md px-3 py-1.5 text-sm flex-1 min-w-[160px]"
+                        />
+                        <button
+                          onClick={() => adminAddTeam(adminSelectedCompetition)}
+                          className="flex items-center gap-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-semibold px-3 py-1.5 rounded-md text-sm"
+                        >
+                          <Plus size={15} /> Adicionar time
+                        </button>
+                      </div>
+
+                      {adminSelectedCompetition.teams.length === 0 ? (
+                        <p className="text-stone-500 text-sm">Nenhum time cadastrado ainda.</p>
+                      ) : (
+                        <div className="flex flex-wrap gap-2">
+                          {adminSelectedCompetition.teams.map((t) =>
+                            editingTeamId === t.id ? (
+                              <div
+                                key={t.id}
+                                className="flex items-center gap-2 bg-emerald-950 border border-amber-500 rounded-full pl-1.5 pr-2 py-1"
+                              >
+                                <div className="relative">
+                                  {editTeamForm.logo ? (
+                                    <img src={editTeamForm.logo} alt="" style={{ width: 22, height: 22 }} className="object-contain" />
+                                  ) : (
+                                    <div className="w-[22px] h-[22px] rounded-full bg-emerald-900/60 flex items-center justify-center">
+                                      <Shield size={12} className="text-stone-500" />
+                                    </div>
+                                  )}
+                                  <label
+                                    htmlFor={`edit-team-logo-${t.id}`}
+                                    className="absolute -bottom-1 -right-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 rounded-full p-0.5 cursor-pointer border border-emerald-950"
+                                  >
+                                    {teamLogoUploading ? <RefreshCw size={9} className="animate-spin" /> : <Camera size={9} />}
+                                  </label>
+                                  <input
+                                    id={`edit-team-logo-${t.id}`}
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleEditTeamLogoChange}
+                                    className="hidden"
+                                  />
+                                </div>
+                                <input
+                                  value={editTeamForm.name}
+                                  onChange={(e) => setEditTeamForm({ ...editTeamForm, name: e.target.value })}
+                                  className="bg-emerald-900 border border-emerald-800 rounded px-2 py-1 text-sm w-28"
+                                />
+                                <button
+                                  onClick={() => adminUpdateTeam(adminSelectedCompetition, t.id)}
+                                  className="text-emerald-400 hover:text-emerald-300"
+                                  title="Salvar"
+                                >
+                                  <CheckCircle2 size={15} />
+                                </button>
+                                <button
+                                  onClick={() => setEditingTeamId(null)}
+                                  className="text-stone-500 hover:text-stone-300"
+                                  title="Cancelar"
+                                >
+                                  <X size={14} />
+                                </button>
+                              </div>
+                            ) : (
+                              <div
+                                key={t.id}
+                                className="flex items-center gap-2 bg-emerald-950 border border-emerald-800 rounded-full pl-1.5 pr-2 py-1"
+                              >
+                                <TeamBadge team={t} size={22} />
+                                <span className="text-sm">{t.name}</span>
+                                <button
+                                  onClick={() => {
+                                    setEditingTeamId(t.id);
+                                    setEditTeamForm({ name: t.name, logo: t.logo || null });
+                                  }}
+                                  className="text-stone-500 hover:text-amber-400"
+                                  title="Editar time"
+                                >
+                                  <Pencil size={13} />
+                                </button>
+                                <button
+                                  onClick={() => adminRemoveTeam(adminSelectedCompetition, t.id)}
+                                  className="text-stone-500 hover:text-red-400"
+                                  title="Remover time"
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* ---------- SUB-ABA: RODADAS E JOGOS ---------- */}
+              {adminSubTab === "jogos" && (
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2">
+                    <Trophy size={16} className="text-stone-400" />
+                    <select
+                      value={adminCompSelectedId || ""}
+                      onChange={(e) => setAdminCompSelectedId(e.target.value)}
+                      className="bg-emerald-900 border border-emerald-800 rounded-md px-3 py-1.5 text-sm outline-none"
+                    >
+                      {data.competitions.length === 0 && <option>Nenhuma competição</option>}
+                      {data.competitions.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {!adminSelectedCompetition ? (
+                    <p className="text-stone-500 text-sm">Crie uma competição primeiro, na aba "Competições e Times".</p>
+                  ) : adminSelectedCompetition.teams.length < 2 ? (
+                    <p className="text-stone-500 text-sm">
+                      Cadastre pelo menos 2 times em "{adminSelectedCompetition.name}" antes de criar jogos.
+                    </p>
+                  ) : (
+                    <>
+                      <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                        <h3 className="font-display text-lg mb-3">Nova rodada em "{adminSelectedCompetition.name}"</h3>
+                        <div className="flex gap-2 flex-wrap">
+                          <input
+                            placeholder="Ex: Rodada 1"
+                            value={adminRoundName}
+                            onChange={(e) => setAdminRoundName(e.target.value)}
+                            className="bg-emerald-950 border border-emerald-800 rounded-md px-3 py-1.5 text-sm flex-1 min-w-[160px]"
+                          />
+                          <button
+                            onClick={() => adminCreateRound(adminSelectedCompetition.id)}
+                            className="flex items-center gap-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-semibold px-3 py-1.5 rounded-md text-sm"
+                          >
+                            <Plus size={15} /> Criar rodada
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <Calendar size={16} className="text-stone-400" />
+                        <select
+                          value={adminSelectedRoundId || ""}
+                          onChange={(e) => setAdminSelectedRoundId(e.target.value)}
+                          className="bg-emerald-900 border border-emerald-800 rounded-md px-3 py-1.5 text-sm outline-none"
+                        >
+                          {adminRoundsOfComp.length === 0 && <option>Nenhuma rodada</option>}
+                          {adminRoundsOfComp.map((r) => (
+                            <option key={r.id} value={r.id}>
+                              {r.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {adminSelectedRound && (
+                        <>
+                          <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-3">
+                              <h3 className="font-display text-lg">
+                                Cadastrar jogos em "{adminSelectedRound.name}" (crie vários de uma vez)
+                              </h3>
+                              <button
+                                onClick={addDraftRow}
+                                className="flex items-center gap-1 text-xs bg-emerald-800 hover:bg-emerald-700 px-2 py-1 rounded-md"
+                              >
+                                <Plus size={13} /> Adicionar linha
+                              </button>
+                            </div>
+                            <p className="text-xs text-amber-400/80 mb-3 flex items-center gap-1">
+                              <Clock size={12} /> Digite o horário de início <b>no fuso de Brasília</b>. Os palpites dessa
+                              rodada fecham assim que o primeiro jogo (pelo horário mais cedo) começar.
+                            </p>
+
+                            {draftGames.length === 0 && (
+                              <p className="text-stone-500 text-sm mb-2">
+                                Clique em "Adicionar linha" para começar a montar os jogos dessa rodada.
+                              </p>
+                            )}
+
+                            <div className="space-y-2">
+                              {draftGames.map((row, i) => (
+                                <div key={i} className="flex flex-wrap items-center gap-2 bg-emerald-950/60 rounded-md p-2">
+                                  <select
+                                    value={row.team1Id}
+                                    onChange={(e) => updateDraftRow(i, "team1Id", e.target.value)}
+                                    className="bg-emerald-950 border border-emerald-800 rounded-md px-2 py-1.5 text-sm"
+                                  >
+                                    <option value="">Time 1...</option>
+                                    {adminSelectedCompetitionTeamsSorted.map((t) => (
+                                      <option key={t.id} value={t.id}>
+                                        {t.name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                  <span className="text-stone-500 text-xs">x</span>
+                                  <select
+                                    value={row.team2Id}
+                                    onChange={(e) => updateDraftRow(i, "team2Id", e.target.value)}
+                                    className="bg-emerald-950 border border-emerald-800 rounded-md px-2 py-1.5 text-sm"
+                                  >
+                                    <option value="">Time 2...</option>
+                                    {adminSelectedCompetitionTeamsSorted.map((t) => (
+                                      <option key={t.id} value={t.id}>
+                                        {t.name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                  <input
+                                    type="datetime-local"
+                                    value={row.startTime}
+                                    onChange={(e) => updateDraftRow(i, "startTime", e.target.value)}
+                                    className="bg-emerald-950 border border-emerald-800 rounded-md px-2 py-1.5 text-sm"
+                                  />
+                                  <button onClick={() => removeDraftRow(i)} className="text-stone-500 hover:text-red-400 ml-auto">
+                                    <Trash2 size={15} />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+
+                            {draftGames.length > 0 && (
+                              <button
+                                onClick={() => saveDraftGames(adminSelectedRound)}
+                                className="mt-3 flex items-center gap-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-semibold px-3 py-1.5 rounded-md text-sm"
+                              >
+                                <CheckCircle2 size={15} /> Salvar {draftGames.length} jogo(s) nessa rodada
+                              </button>
+                            )}
+                          </div>
+
+                          <div className="space-y-3">
+                            <h3 className="font-display text-lg">Jogos já cadastrados em "{adminSelectedRound.name}"</h3>
+                            {adminSelectedRound.games.length === 0 && (
+                              <p className="text-stone-500 text-sm">Nenhum jogo cadastrado ainda nessa rodada.</p>
+                            )}
+                            {[...adminSelectedRound.games]
+                              .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))
+                              .map((game) => {
+                                const t1 = getTeam(adminSelectedCompetition, game.team1Id);
+                                const t2 = getTeam(adminSelectedCompetition, game.team2Id);
+                                const isEditing = editingGameId === game.id;
+                                return (
+                                  <div key={game.id} className="bg-emerald-900/30 border border-emerald-800 rounded-lg p-3">
+                                    {isEditing ? (
+                                      <div className="flex flex-wrap items-center gap-2">
+                                        <select
+                                          value={editGameForm.team1Id}
+                                          onChange={(e) => setEditGameForm({ ...editGameForm, team1Id: e.target.value })}
+                                          className="bg-emerald-950 border border-emerald-800 rounded-md px-2 py-1.5 text-sm"
+                                        >
+                                          <option value="">Time 1...</option>
+                                          {adminSelectedCompetitionTeamsSorted.map((t) => (
+                                            <option key={t.id} value={t.id}>
+                                              {t.name}
+                                            </option>
+                                          ))}
+                                        </select>
+                                        <span className="text-stone-500 text-xs">x</span>
+                                        <select
+                                          value={editGameForm.team2Id}
+                                          onChange={(e) => setEditGameForm({ ...editGameForm, team2Id: e.target.value })}
+                                          className="bg-emerald-950 border border-emerald-800 rounded-md px-2 py-1.5 text-sm"
+                                        >
+                                          <option value="">Time 2...</option>
+                                          {adminSelectedCompetitionTeamsSorted.map((t) => (
+                                            <option key={t.id} value={t.id}>
+                                              {t.name}
+                                            </option>
+                                          ))}
+                                        </select>
+                                        <input
+                                          type="datetime-local"
+                                          value={editGameForm.startTime}
+                                          onChange={(e) => setEditGameForm({ ...editGameForm, startTime: e.target.value })}
+                                          className="bg-emerald-950 border border-emerald-800 rounded-md px-2 py-1.5 text-sm"
+                                        />
+                                        <button
+                                          onClick={() => adminUpdateGame(adminSelectedRound, game.id)}
+                                          className="bg-amber-500 hover:bg-amber-400 text-emerald-950 text-sm font-semibold px-3 py-1.5 rounded-md"
+                                        >
+                                          Salvar
+                                        </button>
+                                        <button
+                                          onClick={() => setEditingGameId(null)}
+                                          className="bg-emerald-800 hover:bg-emerald-700 text-sm px-3 py-1.5 rounded-md"
+                                        >
+                                          Cancelar
+                                        </button>
+                                      </div>
+                                    ) : (
+                                      <div className="flex items-center justify-between flex-wrap gap-2">
+                                        <div className="font-display flex items-center gap-2">
+                                          <TeamBadge team={t1} size={20} /> {t1?.name}{" "}
+                                          <span className="text-stone-500 text-sm">vs</span> {t2?.name}
+                                          <TeamBadge team={t2} size={20} />
+                                        </div>
+                                        <div className="text-xs text-stone-400 flex items-center gap-2">
+                                          <span className="flex items-center gap-1">
+                                            <Clock size={12} /> {fmtDate(game.startTime)}
+                                          </span>
+                                          {game.status === "finished" && (
+                                            <span className="text-emerald-400 flex items-center gap-1">
+                                              <CheckCircle2 size={12} /> resultado lançado
+                                            </span>
+                                          )}
+                                          <button
+                                            onClick={() => {
+                                              setEditingGameId(game.id);
+                                              setEditGameForm({
+                                                team1Id: game.team1Id,
+                                                team2Id: game.team2Id,
+                                                startTime: isoToBrasiliaLocalInput(game.startTime),
+                                              });
+                                            }}
+                                            className="text-stone-400 hover:text-amber-400"
+                                            title="Editar jogo"
+                                          >
+                                            <Pencil size={13} />
+                                          </button>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                          </div>
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+
+              {/* ---------- SUB-ABA: RESULTADOS ---------- */}
+              {adminSubTab === "resultados" && (
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2">
+                    <Trophy size={16} className="text-stone-400" />
+                    <select
+                      value={adminCompSelectedId || ""}
+                      onChange={(e) => setAdminCompSelectedId(e.target.value)}
+                      className="bg-emerald-900 border border-emerald-800 rounded-md px-3 py-1.5 text-sm outline-none"
+                    >
+                      {data.competitions.length === 0 && <option>Nenhuma competição</option>}
+                      {data.competitions.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                    <Calendar size={16} className="text-stone-400 ml-2" />
+                    <select
+                      value={adminSelectedRoundId || ""}
+                      onChange={(e) => setAdminSelectedRoundId(e.target.value)}
+                      className="bg-emerald-900 border border-emerald-800 rounded-md px-3 py-1.5 text-sm outline-none"
+                    >
+                      {adminRoundsOfComp.length === 0 && <option>Nenhuma rodada</option>}
+                      {adminRoundsOfComp.map((r) => (
+                        <option key={r.id} value={r.id}>
+                          {r.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {!adminSelectedRound ? (
+                    <p className="text-stone-500 text-sm">Selecione uma competição e rodada com jogos cadastrados.</p>
+                  ) : adminSelectedRound.games.length === 0 ? (
+                    <p className="text-stone-500 text-sm">Essa rodada ainda não tem jogos cadastrados.</p>
+                  ) : (
+                    <div className="space-y-3">
+                      {[...adminSelectedRound.games]
+                        .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))
+                        .map((game) => {
+                          const t1 = getTeam(adminSelectedCompetition, game.team1Id);
+                          const t2 = getTeam(adminSelectedCompetition, game.team2Id);
+                          return (
+                            <div key={game.id} className="bg-emerald-900/30 border border-emerald-800 rounded-lg p-4">
+                              <div className="flex items-center justify-between flex-wrap gap-2 mb-2">
+                                <div className="font-display flex items-center gap-2">
+                                  <TeamBadge team={t1} size={22} /> {t1?.name}{" "}
+                                  <span className="text-stone-500 text-sm">vs</span> {t2?.name}
+                                  <TeamBadge team={t2} size={22} />
+                                </div>
+                                <div className="text-xs text-stone-400 flex items-center gap-1">
+                                  <Clock size={12} /> {fmtDate(game.startTime)}
+                                </div>
+                              </div>
+                              {game.status === "finished" && editingResultGameId !== game.id ? (
+                                <div className="flex items-center justify-between flex-wrap gap-2">
+                                  <div className="text-sm bg-emerald-950 border border-emerald-700 rounded-md px-3 py-2 inline-flex items-center gap-2">
+                                    <CheckCircle2 size={14} className="text-emerald-400" />
+                                    Resultado: <b>{game.resultWinner === "team1" ? t1?.name : t2?.name}</b> por{" "}
+                                    <b>{game.resultFormat}</b>
+                                  </div>
+                                  <button
+                                    onClick={() => {
+                                      setEditingResultGameId(game.id);
+                                      setAdminResultForm({
+                                        ...adminResultForm,
+                                        [game.id]: { winner: game.resultWinner, format: game.resultFormat },
+                                      });
+                                    }}
+                                    className="flex items-center gap-1 text-xs text-stone-400 hover:text-amber-400"
+                                  >
+                                    <Pencil size={13} /> Editar resultado
+                                  </button>
+                                </div>
+                              ) : (
+                                <div className="flex flex-wrap gap-2 items-center">
+                                  <select
+                                    value={adminResultForm[game.id]?.winner || ""}
+                                    onChange={(e) =>
+                                      setAdminResultForm({
+                                        ...adminResultForm,
+                                        [game.id]: { ...adminResultForm[game.id], winner: e.target.value },
+                                      })
+                                    }
+                                    className="bg-emerald-950 border border-emerald-800 rounded-md px-2 py-1.5 text-sm"
+                                  >
+                                    <option value="">Vencedor...</option>
+                                    <option value="team1">{t1?.name}</option>
+                                    <option value="team2">{t2?.name}</option>
+                                  </select>
+                                  <select
+                                    value={adminResultForm[game.id]?.format || ""}
+                                    onChange={(e) =>
+                                      setAdminResultForm({
+                                        ...adminResultForm,
+                                        [game.id]: { ...adminResultForm[game.id], format: e.target.value },
+                                      })
+                                    }
+                                    className="bg-emerald-950 border border-emerald-800 rounded-md px-2 py-1.5 text-sm"
+                                  >
+                                    <option value="">Formato...</option>
+                                    <option value={FORMAT_MATCHBALL}>{FORMAT_MATCHBALL}</option>
+                                    <option value={FORMAT_SHOOTOUT}>{FORMAT_SHOOTOUT}</option>
+                                  </select>
+                                  <button
+                                    onClick={() => adminSetResult(adminSelectedRound, game)}
+                                    className="bg-amber-500 hover:bg-amber-400 text-emerald-950 text-sm font-semibold px-3 py-1.5 rounded-md"
+                                  >
+                                    {game.status === "finished" ? "Salvar alteração" : "Lançar resultado"}
+                                  </button>
+                                  {game.status === "finished" && (
+                                    <button
+                                      onClick={() => setEditingResultGameId(null)}
+                                      className="bg-emerald-800 hover:bg-emerald-700 text-sm px-3 py-1.5 rounded-md"
+                                    >
+                                      Cancelar
+                                    </button>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <div className="bg-emerald-900/40 border border-emerald-800 rounded-lg p-4">
+                <h3 className="font-display text-lg mb-2 flex items-center gap-2">
+                  <UsersIcon size={16} /> Jogadores cadastrados ({data.users.length})
+                </h3>
+                <p className="text-[11px] text-stone-500 mb-3">
+                  As senhas aparecem aqui porque não usamos criptografia (lembra? é um bolão entre amigos). Cuidado ao
+                  compartilhar a tela.
+                </p>
+                <div className="space-y-1.5">
+                  {data.users.map((u) => {
+                    const isEditingThisUser = adminEditingUserUsername === u.username;
+                    const isPasswordShown = revealedPasswords.has(u.username);
+                    return (
+                      <div key={u.username} className="bg-emerald-950 border border-emerald-800 rounded px-3 py-2 text-sm">
+                        {isEditingThisUser ? (
+                          <div className="flex flex-wrap items-center gap-3">
+                            <div className="relative">
+                              {adminEditUserForm.avatar ? (
+                                <img
+                                  src={adminEditUserForm.avatar}
+                                  alt=""
+                                  className="w-10 h-10 rounded-full object-cover border-2 border-amber-400"
+                                />
+                              ) : (
+                                <div className="w-10 h-10 rounded-full bg-emerald-800 border-2 border-amber-400 flex items-center justify-center">
+                                  <User size={16} className="text-stone-300" />
+                                </div>
+                              )}
+                              <label
+                                htmlFor={`admin-user-avatar-${u.username}`}
+                                className="absolute -bottom-1 -right-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 rounded-full p-1 cursor-pointer border-2 border-emerald-950"
+                              >
+                                {adminUserAvatarUploading ? (
+                                  <RefreshCw size={10} className="animate-spin" />
+                                ) : (
+                                  <Camera size={10} />
+                                )}
+                              </label>
+                              <input
+                                id={`admin-user-avatar-${u.username}`}
+                                type="file"
+                                accept="image/*"
+                                onChange={handleAdminUserAvatarChange}
+                                className="hidden"
+                              />
+                            </div>
+                            <input
+                              value={adminEditUserForm.displayName}
+                              onChange={(e) => setAdminEditUserForm({ ...adminEditUserForm, displayName: e.target.value })}
+                              className="bg-emerald-900 border border-emerald-800 rounded px-2 py-1.5 text-sm flex-1 min-w-[140px]"
+                            />
+                            <button
+                              onClick={() => adminUpdateUserProfile(u.username)}
+                              className="bg-amber-500 hover:bg-amber-400 text-emerald-950 text-xs font-semibold px-3 py-1.5 rounded"
+                            >
+                              Salvar
+                            </button>
+                            <button
+                              onClick={() => setAdminEditingUserUsername(null)}
+                              className="bg-emerald-800 hover:bg-emerald-700 text-xs px-3 py-1.5 rounded"
+                            >
+                              Cancelar
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-between gap-2 flex-wrap">
+                            <div className="flex items-center gap-2">
+                              {u.avatar ? (
+                                <img src={u.avatar} alt="" className="w-8 h-8 rounded-full object-cover" />
+                              ) : (
+                                <div className="w-8 h-8 rounded-full bg-emerald-800 flex items-center justify-center shrink-0">
+                                  <User size={14} className="text-stone-400" />
+                                </div>
+                              )}
+                              <div>
+                                <div>
+                                  {u.displayName} {u.isAdmin && "👑"}
+                                </div>
+                                <div className="text-[11px] text-stone-500 flex items-center gap-1 font-mono">
+                                  {u.username} · senha:{" "}
+                                  {isPasswordShown ? u.password : "••••••••"}
+                                  <button
+                                    onClick={() =>
+                                      setRevealedPasswords((prev) => {
+                                        const next = new Set(prev);
+                                        next.has(u.username) ? next.delete(u.username) : next.add(u.username);
+                                        return next;
+                                      })
+                                    }
+                                    className="text-stone-500 hover:text-stone-300"
+                                    title={isPasswordShown ? "Esconder senha" : "Mostrar senha"}
+                                  >
+                                    <Eye size={11} />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => {
+                                  setAdminEditingUserUsername(u.username);
+                                  setAdminEditUserForm({ displayName: u.displayName, avatar: u.avatar || null });
+                                }}
+                                className="text-stone-500 hover:text-amber-400"
+                                title="Editar nome/foto"
+                              >
+                                <Pencil size={14} />
+                              </button>
+
+                              {u.username !== "admin" && u.username !== session.username && (
+                                <>
+                                  {removeUserConfirm === u.username ? (
+                                    <div className="flex items-center gap-1.5">
+                                      <span className="text-xs text-red-300">Remover de vez?</span>
+                                      <button
+                                        onClick={() => adminRemoveUser(u.username)}
+                                        disabled={removingUser === u.username}
+                                        className="bg-red-600 hover:bg-red-500 disabled:opacity-60 text-white text-xs font-semibold px-2 py-1 rounded"
+                                      >
+                                        {removingUser === u.username ? "Removendo..." : "Confirmar"}
+                                      </button>
+                                      <button
+                                        onClick={() => setRemoveUserConfirm(null)}
+                                        className="bg-emerald-800 hover:bg-emerald-700 text-xs px-2 py-1 rounded"
+                                      >
+                                        Cancelar
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <button
+                                      onClick={() => setRemoveUserConfirm(u.username)}
+                                      className="text-stone-500 hover:text-red-400"
+                                      title="Remover conta"
+                                    >
+                                      <Trash2 size={14} />
+                                    </button>
+                                  )}
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* MODAL: EDITAR PERFIL */}
+      {profileModalOpen && session && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-4">
+          <div className="bg-emerald-950 border border-emerald-800 rounded-xl p-6 w-full max-w-sm scoreboard-glow relative">
+            <button
+              onClick={() => setProfileModalOpen(false)}
+              className="absolute top-3 right-3 text-stone-400 hover:text-stone-200"
+            >
+              <X size={18} />
+            </button>
+            <h3 className="font-display text-xl mb-5">Editar perfil</h3>
+
+            <div className="flex flex-col items-center mb-5">
+              <div className="relative">
+                {profileForm.avatar ? (
+                  <img src={profileForm.avatar} alt="" className="w-20 h-20 rounded-full object-cover border-2 border-amber-400" />
+                ) : (
+                  <div className="w-20 h-20 rounded-full bg-emerald-800 border-2 border-amber-400 flex items-center justify-center">
+                    <User size={30} className="text-stone-300" />
+                  </div>
+                )}
+                <label
+                  htmlFor="avatar-upload"
+                  className="absolute -bottom-1 -right-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 rounded-full p-1.5 cursor-pointer border-2 border-emerald-950"
+                >
+                  {avatarUploading ? <RefreshCw size={14} className="animate-spin" /> : <Camera size={14} />}
+                </label>
+                <input
+                  id="avatar-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarChange}
+                  className="hidden"
+                />
+              </div>
+              <p className="text-xs text-stone-500 mt-2">Clique no ícone da câmera para trocar a foto</p>
+            </div>
+
+            <label className="text-xs text-stone-400 block mb-1">Nome de exibição (aparece na classificação)</label>
+            <input
+              value={profileForm.displayName}
+              onChange={(e) => setProfileForm({ ...profileForm, displayName: e.target.value })}
+              className="w-full bg-emerald-900 border border-emerald-800 rounded-md px-3 py-2 text-sm outline-none focus:border-amber-400 mb-4"
+            />
+
+            <label className="text-xs text-stone-400 block mb-1">Nova senha (deixe em branco para não trocar)</label>
+            <input
+              type="password"
+              value={profileForm.newPassword}
+              onChange={(e) => setProfileForm({ ...profileForm, newPassword: e.target.value })}
+              placeholder="••••••••"
+              className="w-full bg-emerald-900 border border-emerald-800 rounded-md px-3 py-2 text-sm outline-none focus:border-amber-400 mb-3"
+            />
+
+            {profileForm.newPassword.length > 0 && (
+              <>
+                <label className="text-xs text-stone-400 block mb-1">Confirmar nova senha</label>
+                <input
+                  type="password"
+                  value={profileForm.confirmPassword}
+                  onChange={(e) => setProfileForm({ ...profileForm, confirmPassword: e.target.value })}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") saveProfile();
+                  }}
+                  placeholder="••••••••"
+                  className="w-full bg-emerald-900 border border-emerald-800 rounded-md px-3 py-2 text-sm outline-none focus:border-amber-400 mb-3"
+                />
+              </>
+            )}
+
+            <p className="text-[11px] text-stone-500 mb-4">
+              Lembre-se: como já combinamos, as senhas aqui não usam criptografia — não reutilize uma senha importante.
+            </p>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => setProfileModalOpen(false)}
+                className="flex-1 py-2 rounded-md text-sm font-medium bg-emerald-900 hover:bg-emerald-800 border border-emerald-700"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={saveProfile}
+                disabled={profileSaving}
+                className="flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-sm font-semibold bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-emerald-950"
+              >
+                {profileSaving ? <RefreshCw size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
+                {profileSaving ? "Salvando..." : "Salvar"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+</script>
+<script>
+  (function () {
+    var src = document.getElementById("app-source").textContent;
+    var output = Babel.transform(src, {
+      presets: [["react", { runtime: "classic" }]],
+      filename: "app.jsx",
+    }).code;
+    var scriptEl = document.createElement("script");
+    scriptEl.textContent = output;
+    document.body.appendChild(scriptEl);
+  })();
+</script>
+</body>
+</html>
