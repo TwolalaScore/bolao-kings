@@ -826,7 +826,7 @@ function App() {
   const [removeUserConfirm, setRemoveUserConfirm] = useState(null); // username pendente de confirmação
   const [revealedPasswords, setRevealedPasswords] = useState(new Set());
   const [adminEditingUserUsername, setAdminEditingUserUsername] = useState(null);
-  const [adminEditUserForm, setAdminEditUserForm] = useState({ displayName: "", avatar: null });
+  const [adminEditUserForm, setAdminEditUserForm] = useState({ displayName: "", avatar: null, password: "" });
   const [adminUserAvatarUploading, setAdminUserAvatarUploading] = useState(false);
   const [editingGameId, setEditingGameId] = useState(null);
   const [editingTeamId, setEditingTeamId] = useState(null);
@@ -1365,18 +1365,28 @@ function App() {
       showToast("O nome não pode ficar em branco.", "error");
       return;
     }
+    const newPass = (adminEditUserForm.password || "").trim();
+    if (newPass && newPass.length < 4) {
+      showToast("A nova senha precisa ter pelo menos 4 caracteres.", "error");
+      return;
+    }
     const target = data.users.find((u) => u.username === username);
+    if (!target) {
+      showToast("Não encontrei esse jogador. Atualize a página e tente de novo.", "error");
+      return;
+    }
     const updated = {
-      ...(target || { username, password: "", isAdmin: false }),
+      ...target,
       displayName: name,
       avatar: adminEditUserForm.avatar || null,
+      ...(newPass ? { password: newPass } : {}),
     };
     const ok = await setJSON(`user:${username}`, updated);
     if (!ok) {
       showToast("Não consegui salvar. Tente de novo.", "error");
       return;
     }
-    showToast("Jogador atualizado com sucesso!", "success");
+    showToast(newPass ? "Jogador e senha atualizados!" : "Jogador atualizado com sucesso!", "success");
     setAdminEditingUserUsername(null);
     await refresh();
   }
@@ -3049,6 +3059,14 @@ function App() {
                               onChange={(e) => setAdminEditUserForm({ ...adminEditUserForm, displayName: e.target.value })}
                               className="bg-emerald-900 border border-emerald-800 rounded px-2 py-1.5 text-sm flex-1 min-w-[140px]"
                             />
+                            <input
+                              type="text"
+                              placeholder="Nova senha (vazio = não muda)"
+                              value={adminEditUserForm.password || ""}
+                              onChange={(e) => setAdminEditUserForm({ ...adminEditUserForm, password: e.target.value })}
+                              autoComplete="off"
+                              className="bg-emerald-900 border border-emerald-800 rounded px-2 py-1.5 text-sm flex-1 min-w-[160px]"
+                            />
                             <button
                               onClick={() => adminUpdateUserProfile(u.username)}
                               className="bg-amber-500 hover:bg-amber-400 text-emerald-950 text-xs font-semibold px-3 py-1.5 rounded"
@@ -3100,10 +3118,10 @@ function App() {
                               <button
                                 onClick={() => {
                                   setAdminEditingUserUsername(u.username);
-                                  setAdminEditUserForm({ displayName: u.displayName, avatar: u.avatar || null });
+                                  setAdminEditUserForm({ displayName: u.displayName, avatar: u.avatar || null, password: "" });
                                 }}
                                 className="text-stone-500 hover:text-amber-400"
-                                title="Editar nome/foto"
+                                title="Editar nome, foto e senha"
                               >
                                 <Pencil size={14} />
                               </button>
