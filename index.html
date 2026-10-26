@@ -806,6 +806,23 @@ function App() {
   const [data, setData] = useState({ competitions: [], rounds: [], users: [], picksMap: {} });
   const [session, setSession] = useState(null); // {username, displayName, isAdmin}
   const [tab, setTab] = useState("palpitar");
+  // Só o admin usa: esconde (com asteriscos) os palpites já feitos na aba "Palpites da Rodada" antes da rodada abrir.
+  const [hidePicksAdmin, setHidePicksAdmin] = useState(() => {
+    try {
+      return localStorage.getItem("bolao_hidePicksAdmin") === "1";
+    } catch (e) {
+      return false;
+    }
+  });
+  function toggleHidePicksAdmin() {
+    setHidePicksAdmin((v) => {
+      const next = !v;
+      try {
+        localStorage.setItem("bolao_hidePicksAdmin", next ? "1" : "0");
+      } catch (e) {}
+      return next;
+    });
+  }
   const [toast, setToast] = useState(null);
   const [authMode, setAuthMode] = useState("login");
   const [authForm, setAuthForm] = useState({ username: "", password: "", displayName: "" });
@@ -1952,6 +1969,15 @@ function App() {
                   {session.isAdmin && (
                     <p className="text-xs text-stone-500 mb-2">Clique num palpite (ou em "editar") pra corrigi-lo.</p>
                   )}
+                  {session.isAdmin && !picksRevealed(selectedRound) && (
+                    <button
+                      onClick={toggleHidePicksAdmin}
+                      className="mb-3 inline-flex items-center gap-1.5 bg-emerald-800 hover:bg-emerald-700 text-xs px-3 py-1.5 rounded"
+                    >
+                      <Eye size={13} />
+                      {hidePicksAdmin ? "Mostrar palpites" : "Esconder palpites (********)"}
+                    </button>
+                  )}
                   <table className="w-full text-sm border-collapse">
                     <thead>
                       <tr className="text-left text-stone-400 border-b border-emerald-800">
@@ -2020,12 +2046,17 @@ function App() {
                                 );
                               }
 
+                              const maskPick = session.isAdmin && hidePicksAdmin && !picksRevealed(selectedRound);
                               const cellContent = !p ? (
                                 roundLocked(selectedRound) ? (
                                   <span className="text-red-400 text-xs font-semibold">WO</span>
                                 ) : (
                                   <span className="text-stone-600 text-xs">aguardando</span>
                                 )
+                              ) : maskPick ? (
+                                <span className="text-xs tracking-widest text-stone-400" title="Palpite escondido">
+                                  ********
+                                </span>
                               ) : (
                                 <span className="text-xs flex items-center gap-1.5 flex-wrap">
                                   <span>
@@ -2053,7 +2084,7 @@ function App() {
                                     <button
                                       onClick={() => {
                                         setAdminEditingPick({ gameId: g.id, username: u.username });
-                                        setAdminPickForm({ winner: p?.winner || "", format: p?.format || "" });
+                                        setAdminPickForm(maskPick ? { winner: "", format: "" } : { winner: p?.winner || "", format: p?.format || "" });
                                       }}
                                       className="flex items-center gap-1 hover:bg-emerald-900/60 rounded px-1.5 py-0.5 -mx-1.5"
                                       title="Editar palpite"
